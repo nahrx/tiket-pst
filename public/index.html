@@ -1814,7 +1814,11 @@
           ><span id="btn-login-txt">Login</span>
         </button>
         <div class="admin-menu" id="idx-admin-menu" style="display: none">
-          <button class="tadmin-av" id="idx-admin-av" onclick="toggleAdminMenu()">
+          <button
+            class="tadmin-av"
+            id="idx-admin-av"
+            onclick="toggleAdminMenu()"
+          >
             A
           </button>
           <div class="admin-dropdown" id="admin-dropdown">
@@ -2532,6 +2536,11 @@
                 </div>
               </div>
 
+              <div class="ferr" id="err-k-submit" style="margin-bottom: 8px">
+                <i class="ti ti-alert-circle"></i
+                ><span id="err-k-submit-msg"></span>
+              </div>
+
               <button class="btn btn-blue" id="btn-submit" onclick="doSubmit()">
                 <span id="bsub-txt">Kirim Permohonan</span>
                 <i class="ti ti-send" id="bsub-ic"></i>
@@ -2715,7 +2724,7 @@
       <a href="https://kaltim.bps.go.id" target="_blank">kaltim.bps.go.id</a>
       &nbsp;·&nbsp;
       <a href="https://dataetam.com" target="_blank">dataetam.com</a>
-      &nbsp;·&nbsp; v1.0
+      &nbsp;·&nbsp; v1.1
     </div>
 
     <script>
@@ -2797,7 +2806,8 @@
       // TOMBOL LOGIN → PORTAL ADMIN
       // ════════════════════════════════════
       if (localStorage.getItem("admin_token")) {
-        document.getElementById("btn-login-ic").className = "ti ti-layout-dashboard";
+        document.getElementById("btn-login-ic").className =
+          "ti ti-layout-dashboard";
         document.getElementById("btn-login-txt").textContent = "Portal Admin";
 
         var adminInfoRaw = localStorage.getItem("admin_info");
@@ -3274,6 +3284,7 @@
       }
 
       function doSubmit() {
+        document.getElementById("err-k-submit").style.display = "none";
         var chip = document.querySelector(".chip.sel");
         var subjek = document.getElementById("k-subjek").value.trim();
         var uraian = document.getElementById("k-uraian").value.trim();
@@ -3316,11 +3327,24 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         })
-          .catch(function () {
-            return { ok: true };
+          .then(function (res) {
+            return res.json().catch(function () {
+              return { success: true };
+            });
           })
-          .then(function () {
+          .catch(function () {
+            return { success: true }; // demo fallback jika backend tidak tersedia
+          })
+          .then(function (data) {
             hideLoading();
+            if (data && data.success === false) {
+              var msgEl = document.getElementById("err-k-submit-msg");
+              msgEl.textContent = data.message || "Gagal mengirim permohonan";
+              var errEl = document.getElementById("err-k-submit");
+              errEl.style.display = "flex";
+              errEl.scrollIntoView({ behavior: "smooth", block: "center" });
+              return;
+            }
             // set nomor WA display & link
             var waDisplay = "0" + WA_NUMBER.replace(/^62/, "");
             document.getElementById("wa-number").textContent = waDisplay;

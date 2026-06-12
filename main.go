@@ -57,6 +57,8 @@ func main() {
 	protected.HandleFunc("/api/admin/tiket/",      routeTiketAdmin)
 	protected.HandleFunc("/api/admin/petugas",     routePetugasAdminRoot)
 	protected.HandleFunc("/api/admin/petugas/",    routePetugasAdmin)
+	protected.HandleFunc("/api/admin/pengguna",    routePenggunaAdminRoot)
+	protected.HandleFunc("/api/admin/pengguna/",   routePenggunaAdmin)
 
 	mux.Handle("/api/admin/", middleware.JWTAuth(protected))
 
@@ -168,6 +170,44 @@ func routePetugasAdmin(w http.ResponseWriter, r *http.Request) {
 		handlers.UpdatePetugas(w, r)
 	case http.MethodDelete:
 		handlers.HapusPetugas(w, r)
+	default:
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, `{"success":false,"message":"Method tidak diizinkan"}`, http.StatusMethodNotAllowed)
+	}
+}
+
+// routePenggunaAdminRoot menangani /api/admin/pengguna (tanpa trailing slash)
+// GET → list, POST → admin tambah pengguna
+func routePenggunaAdminRoot(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		handlers.ListPengguna(w, r)
+	case http.MethodPost:
+		handlers.TambahPengguna(w, r)
+	default:
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, `{"success":false,"message":"Method tidak diizinkan"}`, http.StatusMethodNotAllowed)
+	}
+}
+
+// routePenggunaAdmin menangani sub-path /api/admin/pengguna/{id}
+func routePenggunaAdmin(w http.ResponseWriter, r *http.Request) {
+	path := strings.TrimPrefix(r.URL.Path, "/api/admin/pengguna/")
+	id := strings.Trim(path, "/")
+
+	if id == "" {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, `{"success":false,"message":"ID pengguna diperlukan"}`, http.StatusBadRequest)
+		return
+	}
+
+	switch r.Method {
+	case http.MethodGet:
+		handlers.DetailPengguna(w, r)
+	case http.MethodPut:
+		handlers.UpdatePengguna(w, r)
+	case http.MethodDelete:
+		handlers.HapusPengguna(w, r)
 	default:
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, `{"success":false,"message":"Method tidak diizinkan"}`, http.StatusMethodNotAllowed)

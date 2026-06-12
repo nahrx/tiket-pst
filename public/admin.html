@@ -1218,6 +1218,13 @@
           >
             <i class="ti ti-users"></i>Petugas PST
           </button>
+          <button
+            class="nav-item"
+            id="nav-pengguna"
+            onclick="showPage('pengguna')"
+          >
+            <i class="ti ti-address-book"></i>Data Pengguna
+          </button>
           <div class="sidebar-foot">
             <div style="display: flex; align-items: center; gap: 10px">
               <div class="sidebar-av" id="sb-av">A</div>
@@ -1492,6 +1499,93 @@
               </div>
             </div>
           </div>
+          <div class="view" id="view-pengguna">
+            <div class="page-hdr">
+              <div>
+                <div class="page-title">Data Pengguna</div>
+                <div class="page-sub">
+                  Daftar masyarakat yang terdaftar di layanan PST BPS Kaltim
+                </div>
+              </div>
+              <button
+                class="btn btn-primary"
+                onclick="openPenggunaModal(false)"
+              >
+                <i class="ti ti-plus"></i>Tambah Pengguna
+              </button>
+            </div>
+            <div class="filter-bar">
+              <div class="search-wrap">
+                <i class="ti ti-search search-ico"></i
+                ><input
+                  type="text"
+                  class="fi fi-search"
+                  id="pg-search"
+                  placeholder="Cari nama, no HP, email..."
+                  oninput="debouncePengguna()"
+                />
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding: 0">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th
+                          class="th-sort"
+                          id="th-pg-nama"
+                          onclick="sortPengguna('nama')"
+                        >
+                          Nama<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th>JK</th>
+                        <th
+                          class="th-sort"
+                          id="th-pg-tahun_lahir"
+                          onclick="sortPengguna('tahun_lahir')"
+                        >
+                          Tahun Lahir<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-pg-pekerjaan"
+                          onclick="sortPengguna('pekerjaan')"
+                        >
+                          Pekerjaan<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-pg-email"
+                          onclick="sortPengguna('email')"
+                        >
+                          Email<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-pg-created_at"
+                          onclick="sortPengguna('created_at')"
+                        >
+                          Terdaftar<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pengguna-tbody">
+                      <tr>
+                        <td colspan="7" class="empty-row">Memuat...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div
+                  class="pagination"
+                  id="pengguna-paging"
+                  style="padding: 12px 16px"
+                ></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1595,28 +1689,25 @@
                   margin-bottom: 12px;
                 "
               >
-                Sebelum mengakhiri tiket, isikan dulu ringkasan pertanyaan dan
-                jawaban pelayanan PST <br />sebagai input di Silastik.
+                Sebelum mengakhiri tiket, isikan hasil konsultasi.
               </div>
               <div class="fgrp">
                 <div class="fl">
-                  Pertanyaan Silastik <span class="req">*</span>
+                  Pertanyaan Pemohon <span class="req">*</span>
                 </div>
                 <textarea
                   class="form-fi form-ta"
                   id="mt-silastik-q"
-                  placeholder="Pertanyaan untuk survei Silastik"
+                  placeholder="Pertanyaan yang diajukan"
                   style="min-height: 60px"
                 ></textarea>
               </div>
               <div class="fgrp">
-                <div class="fl">
-                  Jawaban Silastik <span class="req">*</span>
-                </div>
+                <div class="fl">Jawaban <span class="req">*</span></div>
                 <textarea
                   class="form-fi form-ta"
                   id="mt-silastik-a"
-                  placeholder="Jawaban pemohon"
+                  placeholder="Jawaban petugas PST"
                   style="min-height: 60px"
                 ></textarea>
               </div>
@@ -1791,6 +1882,143 @@
       </div>
     </div>
 
+    <div class="modal-bg" id="m-pengguna">
+      <div class="modal-box" style="max-width: 480px">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-user-plus"></i
+            ><span id="mpg-head">Tambah Pengguna</span>
+          </div>
+          <button class="modal-close" onclick="closeModal('m-pengguna')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="mpg-id" />
+          <div class="frow2">
+            <div class="fgrp">
+              <div class="fl">Nama Lengkap <span class="req">*</span></div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mpg-nama"
+                placeholder="Nama lengkap"
+              />
+            </div>
+            <div class="fgrp">
+              <div class="fl">No HP <span class="req">*</span></div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mpg-hp"
+                placeholder="08xxxxxxxxxx"
+              />
+            </div>
+          </div>
+          <div class="frow2">
+            <div class="fgrp">
+              <div class="fl">Jenis Kelamin <span class="req">*</span></div>
+              <select class="form-fi form-sel" id="mpg-jk">
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+            </div>
+            <div class="fgrp">
+              <div class="fl">Tahun Lahir <span class="req">*</span></div>
+              <input
+                type="number"
+                class="form-fi"
+                id="mpg-tahun"
+                placeholder="1990"
+              />
+            </div>
+          </div>
+          <div class="frow2">
+            <div class="fgrp">
+              <div class="fl">Pendidikan <span class="req">*</span></div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mpg-didik"
+                placeholder="SMA, S1, dst"
+              />
+            </div>
+            <div class="fgrp">
+              <div class="fl">Pekerjaan <span class="req">*</span></div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mpg-kerja"
+                placeholder="Pekerjaan"
+              />
+            </div>
+          </div>
+          <div class="fgrp">
+            <div class="fl">Tempat Bekerja <span class="req">*</span></div>
+            <input
+              type="text"
+              class="form-fi"
+              id="mpg-instansi"
+              placeholder="Nama instansi/perusahaan"
+            />
+          </div>
+          <div class="fgrp">
+            <div class="fl">Email <span class="req">*</span></div>
+            <input
+              type="email"
+              class="form-fi"
+              id="mpg-email"
+              placeholder="nama@email.com"
+            />
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-pengguna')">
+            Batal</button
+          ><button
+            class="btn btn-primary"
+            id="btn-spg"
+            onclick="savePengguna()"
+          >
+            <span id="bspg-txt">Simpan</span>
+            <div class="spin" id="bspg-sp"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="m-del-pengguna">
+      <div class="modal-box" style="max-width: 420px">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-trash" style="color: var(--merah)"></i>Hapus
+            Pengguna
+          </div>
+          <button class="modal-close" onclick="closeModal('m-del-pengguna')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="confirm-box">
+            <strong>Hapus data pengguna ini?</strong><br /><span
+              id="del-pg-nama"
+            ></span>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-del-pengguna')">
+            Batal</button
+          ><button
+            class="btn btn-danger"
+            id="btn-del-pg"
+            onclick="doDelPengguna()"
+          >
+            <i class="ti ti-trash"></i>Ya, Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="toast-wrap" id="toasts"></div>
     <script>
       var API = "";
@@ -1806,6 +2034,12 @@
       var pSort = "nama_lengkap";
       var pOrder = "asc";
       var dtimer = null;
+      var penggunaList = [];
+      var delPenggunaId = null;
+      var pgPage = 1;
+      var pgSort = "created_at";
+      var pgOrder = "desc";
+      var dtimerPg = null;
 
       window.onload = function () {
         token = localStorage.getItem("admin_token") || "";
@@ -1931,7 +2165,10 @@
         updateSortIcons();
         updatePetugasSortIcons();
         var savedPage = localStorage.getItem("admin_page");
-        if (["dashboard", "tiket", "petugas"].indexOf(savedPage) === -1) {
+        if (
+          ["dashboard", "tiket", "petugas", "pengguna"].indexOf(savedPage) ===
+          -1
+        ) {
           savedPage = "dashboard";
         }
         showPage(savedPage);
@@ -1977,7 +2214,7 @@
       function showPage(page) {
         closeSidebar();
         localStorage.setItem("admin_page", page);
-        ["dashboard", "tiket", "petugas"].forEach(function (p) {
+        ["dashboard", "tiket", "petugas", "pengguna"].forEach(function (p) {
           var v = document.getElementById("view-" + p);
           var n = document.getElementById("nav-" + p);
           if (v) {
@@ -1995,6 +2232,7 @@
         if (n) n.classList.add("active");
         if (page === "tiket") loadTiket(1);
         if (page === "petugas") loadPetugas();
+        if (page === "pengguna") loadPengguna(1);
       }
 
       /* DASHBOARD */
@@ -2717,6 +2955,263 @@
           });
       }
 
+      /* PENGGUNA */
+      function debouncePengguna() {
+        clearTimeout(dtimerPg);
+        dtimerPg = setTimeout(function () {
+          loadPengguna(1);
+        }, 400);
+      }
+
+      var PENGGUNA_SORT_COLS = [
+        "nama",
+        "tahun_lahir",
+        "pekerjaan",
+        "email",
+        "created_at",
+      ];
+
+      function sortPengguna(col) {
+        if (pgSort === col) {
+          pgOrder = pgOrder === "asc" ? "desc" : "asc";
+        } else {
+          pgSort = col;
+          pgOrder = "asc";
+        }
+        updatePenggunaSortIcons();
+        loadPengguna(1);
+      }
+
+      function updatePenggunaSortIcons() {
+        PENGGUNA_SORT_COLS.forEach(function (c) {
+          var th = document.getElementById("th-pg-" + c);
+          if (!th) return;
+          var ic = th.querySelector(".sort-ic");
+          if (c === pgSort) {
+            th.classList.add("active");
+            ic.className =
+              "ti " +
+              (pgOrder === "asc" ? "ti-sort-ascending" : "ti-sort-descending") +
+              " sort-ic";
+          } else {
+            th.classList.remove("active");
+            ic.className = "ti ti-arrows-sort sort-ic";
+          }
+        });
+      }
+
+      function loadPengguna(page) {
+        if (page) pgPage = page;
+        var q = document.getElementById("pg-search").value.trim();
+        var params = "?page=" + pgPage + "&limit=20";
+        if (q) params += "&q=" + encodeURIComponent(q);
+        params += "&sort=" + pgSort + "&order=" + pgOrder;
+        document.getElementById("pengguna-tbody").innerHTML =
+          '<tr><td colspan="7" class="empty-row">Memuat data...</td></tr>';
+        apiFetch("/api/admin/pengguna" + params, "GET", null)
+          .then(function (r) {
+            if (!r.success) {
+              toast("Gagal memuat pengguna", "t-err");
+              return;
+            }
+            renderPengguna(r.data);
+          })
+          .catch(function () {
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      function renderPengguna(data) {
+        penggunaList = data.pengguna || [];
+        if (!penggunaList.length) {
+          document.getElementById("pengguna-tbody").innerHTML =
+            '<tr><td colspan="7" class="empty-row">Tidak ada data pengguna</td></tr>';
+          document.getElementById("pengguna-paging").innerHTML = "";
+          return;
+        }
+        var html = "";
+        penggunaList.forEach(function (p) {
+          html +=
+            "<tr>" +
+            '<td><div class="td-nama">' +
+            safe(p.nama) +
+            '</div><div class="td-sub">' +
+            safe(p.no_hp) +
+            "</div></td>" +
+            '<td style="font-size:12px">' +
+            (p.jk === "P" ? "Perempuan" : "Laki-laki") +
+            "</td>" +
+            '<td style="font-size:12px">' +
+            (p.tahun_lahir || "-") +
+            "</td>" +
+            '<td style="font-size:12px">' +
+            safe(p.pekerjaan) +
+            "</td>" +
+            '<td style="font-size:12px">' +
+            safe(p.email) +
+            "</td>" +
+            '<td style="font-size:11px;color:var(--teks3)">' +
+            fmtDate(p.created_at) +
+            "</td>" +
+            '<td><div style="display:flex;gap:5px">' +
+            '<button class="btn btn-icon btn-edit" title="Edit" onclick="openEditPengguna(' +
+            p.id +
+            ')"><i class="ti ti-edit" style="font-size:14px"></i></button>' +
+            '<button class="btn btn-icon btn-del" title="Hapus" onclick="confirmDelPengguna(' +
+            p.id +
+            ",'" +
+            safe(p.nama).replace(/'/g, "") +
+            '\')"><i class="ti ti-trash" style="font-size:14px"></i></button>' +
+            "</div></td></tr>";
+        });
+        document.getElementById("pengguna-tbody").innerHTML = html;
+
+        var total = data.total || 0;
+        var totalPages = data.total_pages || 1;
+        var from = (pgPage - 1) * 20 + 1;
+        var to = Math.min(pgPage * 20, total);
+        var ph =
+          "<span>" +
+          from +
+          "-" +
+          to +
+          " dari " +
+          total +
+          ' pengguna</span><div class="page-btns">';
+        ph +=
+          '<button class="page-btn" ' +
+          (pgPage <= 1 ? "disabled" : "") +
+          ' onclick="loadPengguna(' +
+          (pgPage - 1) +
+          ')"><i class="ti ti-chevron-left" style="font-size:12px"></i></button>';
+        var s = Math.max(1, pgPage - 2),
+          e = Math.min(totalPages, s + 4);
+        for (var i = s; i <= e; i++)
+          ph +=
+            '<button class="page-btn' +
+            (i === pgPage ? " active" : "") +
+            '" onclick="loadPengguna(' +
+            i +
+            ')">' +
+            i +
+            "</button>";
+        ph +=
+          '<button class="page-btn" ' +
+          (pgPage >= totalPages ? "disabled" : "") +
+          ' onclick="loadPengguna(' +
+          (pgPage + 1) +
+          ')"><i class="ti ti-chevron-right" style="font-size:12px"></i></button></div>';
+        document.getElementById("pengguna-paging").innerHTML = ph;
+      }
+
+      function openPenggunaModal(isEdit) {
+        if (!isEdit) {
+          window.location.href = "index.html";
+          return;
+        }
+        document.getElementById("mpg-head").textContent = "Edit Pengguna";
+        openModal("m-pengguna");
+      }
+
+      function openEditPengguna(id) {
+        apiFetch("/api/admin/pengguna/" + id, "GET", null).then(function (r) {
+          if (!r.success) {
+            toast("Gagal memuat data pengguna", "t-err");
+            return;
+          }
+          var p = r.data;
+          document.getElementById("mpg-id").value = p.id;
+          document.getElementById("mpg-nama").value = p.nama || "";
+          document.getElementById("mpg-hp").value = p.no_hp || "";
+          document.getElementById("mpg-jk").value = p.jk || "L";
+          document.getElementById("mpg-tahun").value = p.tahun_lahir || "";
+          document.getElementById("mpg-didik").value = p.pendidikan || "";
+          document.getElementById("mpg-kerja").value = p.pekerjaan || "";
+          document.getElementById("mpg-instansi").value =
+            p.tempat_bekerja || "";
+          document.getElementById("mpg-email").value = p.email || "";
+          openPenggunaModal(true);
+        });
+      }
+
+      function savePengguna() {
+        var id = document.getElementById("mpg-id").value;
+        var nama = document.getElementById("mpg-nama").value.trim();
+        var noHp = document.getElementById("mpg-hp").value.trim();
+        var jk = document.getElementById("mpg-jk").value;
+        var tahun = parseInt(document.getElementById("mpg-tahun").value, 10);
+        var didik = document.getElementById("mpg-didik").value.trim();
+        var kerja = document.getElementById("mpg-kerja").value.trim();
+        var instansi = document.getElementById("mpg-instansi").value.trim();
+        var email = document.getElementById("mpg-email").value.trim();
+
+        if (
+          !nama ||
+          !noHp ||
+          !didik ||
+          !kerja ||
+          !instansi ||
+          !email ||
+          !tahun
+        ) {
+          toast("Semua field wajib diisi", "t-warn");
+          return;
+        }
+
+        setBtn("btn-spg", "bspg-txt", null, "bspg-sp", "Menyimpan...", true);
+        var path = id ? "/api/admin/pengguna/" + id : "/api/admin/pengguna";
+        var method = id ? "PUT" : "POST";
+        apiFetch(path, method, {
+          nama: nama,
+          no_hp: noHp,
+          jk: jk,
+          tahun_lahir: tahun,
+          pendidikan: didik,
+          pekerjaan: kerja,
+          tempat_bekerja: instansi,
+          email: email,
+        })
+          .then(function (r) {
+            setBtn("btn-spg", "bspg-txt", null, "bspg-sp", "Simpan", false);
+            if (r.success) {
+              closeModal("m-pengguna");
+              toast(
+                id ? "Pengguna diperbarui" : "Pengguna ditambahkan",
+                "t-ok",
+              );
+              loadPengguna(pgPage);
+            } else toast(r.message || "Gagal menyimpan", "t-err");
+          })
+          .catch(function () {
+            setBtn("btn-spg", "bspg-txt", null, "bspg-sp", "Simpan", false);
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      function confirmDelPengguna(id, nama) {
+        delPenggunaId = id;
+        document.getElementById("del-pg-nama").textContent = nama;
+        openModal("m-del-pengguna");
+      }
+
+      function doDelPengguna() {
+        if (!delPenggunaId) return;
+        document.getElementById("btn-del-pg").disabled = true;
+        apiFetch("/api/admin/pengguna/" + delPenggunaId, "DELETE", null)
+          .then(function (r) {
+            document.getElementById("btn-del-pg").disabled = false;
+            closeModal("m-del-pengguna");
+            if (r.success) {
+              toast("Pengguna dihapus", "t-ok");
+              loadPengguna(pgPage);
+            } else toast(r.message || "Gagal menghapus", "t-err");
+          })
+          .catch(function () {
+            document.getElementById("btn-del-pg").disabled = false;
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
       /* MODAL */
       function openModal(id) {
         document.getElementById(id).classList.add("open");
@@ -2731,6 +3226,8 @@
           "m-del-tiket",
           "m-petugas",
           "m-del-petugas",
+          "m-pengguna",
+          "m-del-pengguna",
         ].forEach(function (id) {
           var el = document.getElementById(id);
           if (el && e.target === el) el.classList.remove("open");
