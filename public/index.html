@@ -1,0 +1,3415 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiket Layanan — BPS Kalimantan Timur</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <style>
+      /* ════════════════════════════════
+   RESET & ROOT
+════════════════════════════════ */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --biru: #003b70;
+        --biru2: #0056a6;
+        --biru3: #1a7cc9;
+        --biru4: #3b9eda;
+        --biru-light: #e8f2fa;
+        --biru-mid: #c2ddef;
+        --hijau: #1a7940;
+        --hijau2: #27ae60;
+        --hijau-light: #d4edda;
+        --hijau-mid: #a0d8b0;
+        --merah: #c0392b;
+        --merah-light: #fdecea;
+        --emas: #b7860b;
+        --emas-light: #fef3d0;
+        --abu: #f0f4f9;
+        --abu2: #e3eaf3;
+        --putih: #ffffff;
+        --teks: #1a2333;
+        --teks2: #566275;
+        --teks3: #8898aa;
+        --border: #dde3ee;
+        --r: 16px;
+        --r2: 10px;
+        --r3: 8px;
+        --shadow: 0 2px 16px rgba(0, 59, 112, 0.1);
+        --shadow2: 0 8px 32px rgba(0, 59, 112, 0.16);
+        --topbar-h: 60px;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--abu);
+        color: var(--teks);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ════════════════════════════════
+   BACKGROUND
+════════════════════════════════ */
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 38px 38px;
+        opacity: 0.25;
+      }
+      .bg-blob1 {
+        position: absolute;
+        top: -140px;
+        right: -100px;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 86, 166, 0.1) 0%,
+          transparent 70%
+        );
+      }
+      .bg-blob2 {
+        position: absolute;
+        bottom: -100px;
+        left: -80px;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(26, 124, 201, 0.07) 0%,
+          transparent 70%
+        );
+      }
+
+      /* ════════════════════════════════
+   TOPBAR FIXED
+════════════════════════════════ */
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        background: var(--putih);
+        border-bottom: 1px solid var(--border);
+        height: var(--topbar-h);
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 2px 16px rgba(0, 59, 112, 0.08);
+        transition: box-shadow 0.3s;
+      }
+      .topbar.scrolled {
+        box-shadow: 0 4px 24px rgba(0, 59, 112, 0.14);
+      }
+      .tlogo {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        background: var(--putih);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .tbrand-wrap {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .tbrand {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--biru);
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tsub {
+        font-size: 10.5px;
+        color: var(--teks2);
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tsep {
+        width: 1px;
+        height: 26px;
+        background: var(--border);
+        margin: 0 2px;
+      }
+      .app-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .app-logo {
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--biru2), var(--biru3));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 16px;
+        box-shadow: 0 2px 6px rgba(0, 86, 166, 0.25);
+      }
+      .app-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--biru);
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+      }
+      .app-name b {
+        font-weight: 800;
+        color: var(--biru2);
+      }
+      .tright {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tadmin-av {
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--biru), var(--biru3));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+        color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 59, 112, 0.25);
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .tadmin-av:hover {
+        transform: scale(1.06);
+        box-shadow: 0 3px 10px rgba(0, 59, 112, 0.35);
+      }
+      .admin-menu {
+        position: relative;
+      }
+      .admin-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        min-width: 180px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        z-index: 300;
+      }
+      .admin-dropdown.open {
+        display: block;
+      }
+      .admin-dropdown-info {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .admin-dropdown-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--teks);
+      }
+      .admin-dropdown-user {
+        font-size: 11px;
+        color: var(--teks3);
+        margin-top: 2px;
+      }
+      .admin-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--merah);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        text-align: left;
+        transition: background 0.15s;
+      }
+      .admin-dropdown-item:hover {
+        background: var(--merah-light);
+      }
+      .tinfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        line-height: 1;
+      }
+      .tclock {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--biru);
+        font-variant-numeric: tabular-nums;
+      }
+      .tstatus {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 100px;
+      }
+      .tstatus.open {
+        background: var(--hijau-light);
+        color: var(--hijau);
+      }
+      .tstatus.closed {
+        background: var(--merah-light);
+        color: var(--merah);
+      }
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: blink 1.6s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.25;
+        }
+      }
+
+      /* ════════════════════════════════
+   PROGRESS BAR (below topbar, also fixed)
+════════════════════════════════ */
+      .progress-bar {
+        position: fixed;
+        top: var(--topbar-h);
+        left: 0;
+        right: 0;
+        z-index: 199;
+        background: var(--putih);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 24px;
+      }
+      .prog-steps {
+        display: flex;
+        align-items: center;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+      .ps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+      }
+      .psn {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--teks3);
+        flex-shrink: 0;
+        transition: all 0.35s;
+      }
+      .psn.done {
+        background: var(--hijau);
+        border-color: var(--hijau);
+        color: #fff;
+      }
+      .psn.act {
+        background: var(--biru2);
+        border-color: var(--biru2);
+        color: #fff;
+      }
+      .psl {
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--teks3);
+        transition: color 0.3s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .psl.done {
+        color: var(--hijau);
+        font-weight: 600;
+      }
+      .psl.act {
+        color: var(--biru2);
+        font-weight: 700;
+      }
+      .pline {
+        flex: 0 1 30px;
+        height: 2px;
+        background: var(--border);
+        margin: 0 5px;
+        border-radius: 2px;
+        transition: background 0.4s;
+        min-width: 8px;
+      }
+      .pline.done {
+        background: var(--hijau);
+      }
+
+      /* ════════════════════════════════
+   MAIN CONTENT AREA
+════════════════════════════════ */
+      .page {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+        padding-top: calc(var(--topbar-h) + 44px + 28px);
+        padding-bottom: 48px;
+        display: flex;
+        justify-content: center;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .col {
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* ════════════════════════════════
+   HERO BANNER
+════════════════════════════════ */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--biru) 0%,
+          var(--biru2) 55%,
+          var(--biru3) 100%
+        );
+        border-radius: var(--r);
+        padding: 22px 24px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow2);
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        left: 35%;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .hero-ico {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .hero-ico i {
+        font-size: 24px;
+        color: #fff;
+      }
+      .hero-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.25;
+      }
+      .hero-sub {
+        font-size: 11.5px;
+        color: rgba(255, 255, 255, 0.68);
+        margin-top: 5px;
+        line-height: 1.55;
+      }
+      .hp-pill {
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.13);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 100px;
+        padding: 5px 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .hp-pill i {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .hp-pill span {
+        font-size: 12px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .hp-pill .btn-ganti {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.55);
+        cursor: pointer;
+        text-decoration: underline;
+        border: none;
+        background: none;
+        font-family: inherit;
+        font-weight: 500;
+        padding: 0;
+        margin-left: 2px;
+      }
+      .hp-pill .btn-ganti:hover {
+        color: #fff;
+      }
+
+      /* ════════════════════════════════
+   CARD
+════════════════════════════════ */
+      .card {
+        background: var(--putih);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .card-head {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #fafbfd;
+      }
+      .ch-ic {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--biru-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .ch-ic i {
+        font-size: 17px;
+        color: var(--biru2);
+      }
+      .ch-ic.green {
+        background: var(--hijau-light);
+      }
+      .ch-ic.green i {
+        color: var(--hijau);
+      }
+      .ch-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--teks);
+        line-height: 1.2;
+      }
+      .ch-sub {
+        font-size: 11px;
+        color: var(--teks2);
+        margin-top: 1px;
+      }
+      .card-head.grad-blue {
+        background: linear-gradient(135deg, var(--biru), var(--biru2));
+      }
+      .card-head.grad-green {
+        background: linear-gradient(135deg, #14693a, var(--hijau));
+      }
+      .card-head.grad-blue .ch-ic,
+      .card-head.grad-green .ch-ic {
+        background: rgba(255, 255, 255, 0.18);
+      }
+      .card-head.grad-blue .ch-ic i,
+      .card-head.grad-green .ch-ic i {
+        color: #fff;
+        font-size: 20px;
+      }
+      .card-head.grad-blue .ch-title,
+      .card-head.grad-green .ch-title {
+        color: #fff;
+      }
+      .card-head.grad-blue .ch-sub,
+      .card-head.grad-green .ch-sub {
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .card-body {
+        padding: 22px;
+      }
+
+      /* ════════════════════════════════
+   SECTION DIVIDER
+════════════════════════════════ */
+      .sec {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 20px 0 13px;
+      }
+      .sec:first-child {
+        margin-top: 0;
+      }
+      .sec-ic {
+        width: 26px;
+        height: 26px;
+        border-radius: 7px;
+        background: var(--biru-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .sec-ic i {
+        font-size: 14px;
+        color: var(--biru2);
+      }
+      .sec-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--biru2);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        white-space: nowrap;
+      }
+      .sec-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ════════════════════════════════
+   FORM ELEMENTS
+════════════════════════════════ */
+      .fgrp {
+        margin-bottom: 14px;
+      }
+      .frow2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .fl {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--teks);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .fl .req {
+        color: var(--merah);
+      }
+      .fi-wrap {
+        position: relative;
+      }
+      .fi-wrap i.ico {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: var(--teks3);
+        pointer-events: none;
+      }
+      .fi-wrap .fi {
+        padding-left: 35px;
+      }
+      .fi {
+        width: 100%;
+        padding: 10px 13px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 13px;
+        color: var(--teks);
+        background: var(--putih);
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .fi:focus {
+        border-color: var(--biru2);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.09);
+      }
+      .fi.ok {
+        border-color: var(--hijau);
+        box-shadow: 0 0 0 3px rgba(26, 121, 64, 0.07);
+      }
+      .fi.err {
+        border-color: var(--merah);
+        box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.07);
+      }
+      .fi::placeholder {
+        color: var(--teks3);
+        font-size: 12px;
+      }
+      .fi-sel {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23566275' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 11px) center;
+        cursor: pointer;
+      }
+      .fi-ta {
+        min-height: 80px;
+        resize: vertical;
+        line-height: 1.55;
+      }
+      .ferr {
+        font-size: 11px;
+        color: var(--merah);
+        margin-top: 4px;
+        display: none;
+        align-items: center;
+        gap: 3px;
+      }
+      .ferr i {
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      .fhint {
+        font-size: 11px;
+        color: var(--teks3);
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+
+      /* HP input dengan prefix +62 */
+      .hp-input-wrap {
+        display: flex;
+      }
+      .hp-prefix {
+        padding: 10px 12px;
+        background: var(--abu);
+        border: 1.5px solid var(--border);
+        border-right: none;
+        border-radius: var(--r2) 0 0 var(--r2);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--teks2);
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .hp-prefix i {
+        font-size: 15px;
+        margin-right: 5px;
+        color: var(--biru2);
+      }
+      .hp-input-wrap .fi {
+        border-radius: 0 var(--r2) var(--r2) 0;
+      }
+
+      /* GENDER */
+      .gender-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .gender-btn {
+        padding: 9px 10px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--teks2);
+        cursor: pointer;
+        background: var(--putih);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .gender-btn i {
+        font-size: 18px;
+      }
+      .gender-btn:hover {
+        border-color: var(--biru2);
+        color: var(--biru2);
+        background: var(--biru-light);
+      }
+      .gender-btn.sel-l {
+        border-color: var(--biru2);
+        background: var(--biru-light);
+        color: var(--biru2);
+      }
+      .gender-btn.sel-p {
+        border-color: #c0392b;
+        background: #fdecea;
+        color: #c0392b;
+      }
+
+      /* TAHUN LAHIR */
+      .tahun-block {
+        background: var(--abu);
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        padding: 14px 16px;
+        transition: all 0.2s;
+      }
+      .tahun-block.focused {
+        border-color: var(--biru2);
+        background: var(--biru-light);
+      }
+      .tahun-block.has-ok {
+        border-color: var(--hijau);
+        background: #f2fbf5;
+      }
+      .tahun-block.has-err {
+        border-color: var(--merah);
+        background: var(--merah-light);
+      }
+      .tahun-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .usia-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 700;
+        background: var(--biru-light);
+        color: var(--biru2);
+        border: 1px solid var(--biru-mid);
+        transition: all 0.3s;
+        white-space: nowrap;
+      }
+      .usia-badge.ok {
+        background: var(--hijau-light);
+        color: var(--hijau);
+        border-color: var(--hijau-mid);
+      }
+      .usia-badge.err {
+        background: var(--merah-light);
+        color: var(--merah);
+        border-color: #f5c6c2;
+      }
+      .thn-fi-wrap {
+        position: relative;
+        flex: 1;
+      }
+      .thn-fi-wrap i.ico {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: var(--teks3);
+        pointer-events: none;
+      }
+      .tahun-fi {
+        width: 100%;
+        padding: 9px 12px 9px 34px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--biru);
+        background: var(--putih);
+        outline: none;
+        transition: all 0.2s;
+        letter-spacing: 0.5px;
+      }
+      .tahun-fi:focus {
+        border-color: var(--biru2);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.09);
+      }
+      .tahun-fi.ok {
+        border-color: var(--hijau);
+      }
+      .tahun-fi.err-b {
+        border-color: var(--merah);
+      }
+      .thn-slider {
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 5px;
+        border-radius: 3px;
+        outline: none;
+        cursor: pointer;
+        margin: 4px 0 0;
+      }
+      .thn-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--biru2);
+        border: 3px solid #fff;
+        box-shadow: 0 2px 8px rgba(0, 86, 166, 0.3);
+        cursor: pointer;
+      }
+      .thn-slider::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--biru2);
+        border: 3px solid #fff;
+        cursor: pointer;
+      }
+      .thn-range-lbl {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--teks3);
+        margin-top: 5px;
+        padding: 0 1px;
+      }
+      .thn-range-lbl .mid {
+        color: var(--biru2);
+        font-weight: 700;
+      }
+
+      /* PENDIDIKAN & PEKERJAAN */
+      .didik-wrap {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+      }
+      .sel-btn {
+        padding: 11px 6px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        cursor: pointer;
+        background: var(--putih);
+        text-align: center;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .sel-btn i {
+        font-size: 20px;
+        color: var(--teks3);
+        transition: color 0.2s;
+      }
+      .sel-btn .sb-label {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--teks2);
+        line-height: 1.25;
+        transition: color 0.2s;
+      }
+      .sel-btn .sb-sub {
+        font-size: 10px;
+        color: var(--teks3);
+        line-height: 1.3;
+        transition: color 0.2s;
+      }
+      .sel-btn:hover,
+      .sel-btn.sel {
+        border-color: var(--biru2);
+        background: var(--biru-light);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.09);
+      }
+      .sel-btn:hover i,
+      .sel-btn.sel i,
+      .sel-btn:hover .sb-label,
+      .sel-btn.sel .sb-label,
+      .sel-btn:hover .sb-sub,
+      .sel-btn.sel .sb-sub {
+        color: var(--biru2);
+      }
+
+      .kerja-wrap {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+      .kerja-btn {
+        padding: 12px 8px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        cursor: pointer;
+        background: var(--putih);
+        text-align: center;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .kerja-btn i {
+        font-size: 22px;
+        color: var(--teks3);
+        transition: color 0.2s;
+      }
+      .kerja-btn .k-label {
+        font-size: 10.5px;
+        font-weight: 700;
+        color: var(--teks2);
+        line-height: 1.3;
+        transition: color 0.2s;
+      }
+      .kerja-btn:hover,
+      .kerja-btn.sel {
+        border-color: var(--biru2);
+        background: var(--biru-light);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.09);
+      }
+      .kerja-btn:hover i,
+      .kerja-btn.sel i,
+      .kerja-btn:hover .k-label,
+      .kerja-btn.sel .k-label {
+        color: var(--biru2);
+      }
+
+      /* EXTRA BOX (lainnya + instansi) */
+      .extra-box {
+        border: 1.5px solid var(--biru-mid);
+        background: var(--biru-light);
+        border-radius: var(--r2);
+        padding: 14px 16px;
+        margin-top: 10px;
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        animation: vin 0.22s ease;
+      }
+      .extra-box.show {
+        display: flex;
+      }
+      .extra-lbl {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--biru2);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* KATEGORI CHIPS (keperluan) */
+      .chip-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      .chip {
+        padding: 7px 13px;
+        border: 1.5px solid var(--border);
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--teks2);
+        cursor: pointer;
+        background: var(--putih);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-family: inherit;
+      }
+      .chip i {
+        font-size: 13px;
+      }
+      .chip:hover,
+      .chip.sel {
+        border-color: var(--biru2);
+        color: var(--biru2);
+        background: var(--biru-light);
+      }
+
+      /* SUB-KATEGORI */
+      .sub-kat-box {
+        background: var(--biru-light);
+        border: 1px solid var(--biru-mid);
+        border-radius: var(--r2);
+        padding: 12px 14px;
+        margin-top: 10px;
+        display: none;
+        animation: vin 0.22s ease;
+      }
+      .sub-kat-box.show {
+        display: block;
+      }
+
+      /* ════════════════════════════════
+   INFO BOX
+════════════════════════════════ */
+      .ibox {
+        border-radius: var(--r2);
+        padding: 11px 14px;
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        margin-bottom: 0;
+      }
+      .ibox i {
+        font-size: 15px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .ibox p {
+        font-size: 12px;
+        line-height: 1.55;
+        color: var(--teks);
+      }
+      .ibox-blue {
+        background: var(--biru-light);
+        border: 1px solid var(--biru-mid);
+      }
+      .ibox-blue i {
+        color: var(--biru2);
+      }
+      .ibox-gold {
+        background: var(--emas-light);
+        border: 1px solid #f0d080;
+      }
+      .ibox-gold i {
+        color: var(--emas);
+      }
+      .ibox-green {
+        background: var(--hijau-light);
+        border: 1px solid var(--hijau-mid);
+      }
+      .ibox-green i {
+        color: var(--hijau);
+      }
+      .ibox-red {
+        background: var(--merah-light);
+        border: 1px solid #f5c6c2;
+      }
+      .ibox-red i {
+        color: var(--merah);
+      }
+
+      /* ════════════════════════════════
+   PROFILE ROW
+════════════════════════════════ */
+      .prow {
+        background: var(--abu);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 13px 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--biru), var(--biru3));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .prow-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--teks);
+      }
+      .prow-meta {
+        font-size: 11px;
+        color: var(--teks2);
+        margin-top: 2px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 100px;
+        margin-top: 4px;
+      }
+      .badge-green {
+        background: var(--hijau-light);
+        color: var(--hijau);
+        border: 1px solid var(--hijau-mid);
+      }
+      .badge-gold {
+        background: var(--emas-light);
+        color: var(--emas);
+        border: 1px solid #f0d080;
+      }
+
+      /* ════════════════════════════════
+   BUTTONS
+════════════════════════════════ */
+      .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
+        letter-spacing: 0.2px;
+        margin-top: 18px;
+      }
+      .btn-blue {
+        background: linear-gradient(135deg, var(--biru), var(--biru2));
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(0, 59, 112, 0.22);
+      }
+      .btn-blue:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 7px 20px rgba(0, 59, 112, 0.28);
+      }
+      .btn-blue:active {
+        transform: translateY(0);
+      }
+      .btn-blue:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .btn-green {
+        background: linear-gradient(135deg, #14693a, var(--hijau));
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(26, 121, 64, 0.22);
+      }
+      .btn-green:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 7px 20px rgba(26, 121, 64, 0.28);
+      }
+      .btn-green:active {
+        transform: translateY(0);
+      }
+      .btn-green:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .btn-ghost {
+        background: none;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        padding: 9px 14px;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--teks2);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+      }
+      .btn-ghost:hover {
+        border-color: var(--biru2);
+        color: var(--biru2);
+        background: var(--biru-light);
+      }
+      .spin {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: rot 0.6s linear infinite;
+        display: none;
+      }
+      @keyframes rot {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* URGENSI */
+      .urgensi-wrap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .urgensi-btn {
+        padding: 9px 6px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        cursor: pointer;
+        background: var(--putih);
+        text-align: center;
+        transition: all 0.2s;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--teks2);
+      }
+      .urgensi-btn:hover {
+        border-color: var(--biru2);
+        background: var(--biru-light);
+        color: var(--biru2);
+      }
+      .urgensi-btn.sel-rendah {
+        border-color: var(--hijau);
+        background: var(--hijau-light);
+        color: var(--hijau);
+      }
+      .urgensi-btn.sel-sedang {
+        border-color: var(--emas);
+        background: var(--emas-light);
+        color: var(--emas);
+      }
+      .urgensi-btn.sel-tinggi {
+        border-color: var(--merah);
+        background: var(--merah-light);
+        color: var(--merah);
+      }
+
+      /* TIKET NUM */
+      .tiket-num {
+        display: inline-block;
+        background: var(--biru-light);
+        border: 2px dashed var(--biru2);
+        border-radius: 10px;
+        padding: 10px 24px;
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--biru);
+        letter-spacing: 2px;
+        margin: 10px 0 14px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* REVIEW GRID */
+      .rv-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        margin-bottom: 16px;
+      }
+      .rv-item {
+        background: var(--abu);
+        border-radius: var(--r2);
+        padding: 11px 13px;
+        border: 1px solid var(--border);
+      }
+      .rv-label {
+        font-size: 10px;
+        color: var(--teks3);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 3px;
+      }
+      .rv-val {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--teks);
+        word-break: break-word;
+      }
+
+      /* SUCCESS */
+      .suc-ring {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--hijau), var(--hijau2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+        box-shadow: 0 6px 20px rgba(26, 121, 64, 0.3);
+      }
+      .suc-ring i {
+        font-size: 30px;
+        color: #fff;
+      }
+
+      /* VIEWS */
+      .view {
+        display: none;
+      }
+      .view.on {
+        display: block;
+        animation: vin 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      @keyframes vin {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* DIVIDER */
+      .divv {
+        height: 1px;
+        background: var(--border);
+        margin: 16px 0;
+      }
+
+      /* LOADING OVERLAY */
+      .loading-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        background: rgba(26, 35, 51, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(3px);
+      }
+      .loading-overlay.show {
+        display: flex;
+      }
+      .loading-box {
+        background: var(--putih);
+        border-radius: var(--r);
+        padding: 28px 32px;
+        text-align: center;
+        box-shadow: var(--shadow2);
+        min-width: 220px;
+      }
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--border);
+        border-top-color: var(--biru2);
+        border-radius: 50%;
+        animation: rot 0.7s linear infinite;
+        margin: 0 auto 14px;
+      }
+      .loading-txt {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--teks);
+      }
+      .loading-sub {
+        font-size: 11px;
+        color: var(--teks2);
+        margin-top: 4px;
+      }
+
+      /* BANTUAN STRIP */
+      .help-strip {
+        background: var(--putih);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 12px 18px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        box-shadow: var(--shadow);
+      }
+      .help-strip i.hi {
+        font-size: 20px;
+        color: var(--biru2);
+        flex-shrink: 0;
+      }
+
+      /* FOOTER */
+      .foot {
+        position: relative;
+        z-index: 1;
+        padding: 14px;
+        text-align: center;
+        font-size: 11px;
+        color: var(--teks3);
+      }
+      .foot a {
+        color: var(--biru2);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      /* ── TOMBOL LOGIN ── */
+      .btn-login {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        background: var(--biru);
+        color: #fff;
+        border: none;
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0, 59, 112, 0.22);
+      }
+      .btn-login:hover {
+        background: var(--biru2);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 59, 112, 0.28);
+      }
+      .btn-login i {
+        font-size: 14px;
+      }
+
+      /* ── MODAL LOGIN ── */
+      .modal-bg {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 500;
+        background: rgba(10, 20, 40, 0.55);
+        backdrop-filter: blur(3px);
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-bg.open {
+        display: flex;
+      }
+      .modal-box {
+        background: var(--putih);
+        border-radius: 18px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 16px;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+        overflow: hidden;
+        animation: mIn 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      @keyframes mIn {
+        from {
+          opacity: 0;
+          transform: scale(0.94) translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .modal-head {
+        background: linear-gradient(135deg, var(--biru), var(--biru2));
+        padding: 22px 24px 18px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        position: relative;
+      }
+      .modal-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .modal-logo img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+      }
+      .modal-head-title {
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.2;
+      }
+      .modal-head-sub {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.65);
+        margin-top: 2px;
+      }
+      .modal-close {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+        transition: background 0.2s;
+      }
+      .modal-close:hover {
+        background: rgba(255, 255, 255, 0.28);
+      }
+      .modal-body {
+        padding: 24px;
+      }
+      .modal-fgrp {
+        margin-bottom: 14px;
+      }
+      .modal-fl {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--teks);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .modal-input-wrap {
+        position: relative;
+      }
+      .modal-input-wrap i.ico {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: var(--teks3);
+        pointer-events: none;
+      }
+      .modal-fi {
+        width: 100%;
+        padding: 10px 13px 10px 35px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 13px;
+        color: var(--teks);
+        background: var(--putih);
+        outline: none;
+        transition: all 0.2s;
+      }
+      .modal-fi:focus {
+        border-color: var(--biru2);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.09);
+      }
+      .modal-fi.err {
+        border-color: var(--merah);
+        box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.07);
+      }
+      .modal-fi::placeholder {
+        color: var(--teks3);
+        font-size: 12px;
+      }
+      .pw-toggle {
+        position: absolute;
+        right: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--teks3);
+        font-size: 16px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+      }
+      .pw-toggle:hover {
+        color: var(--biru2);
+      }
+      .modal-err {
+        font-size: 11px;
+        color: var(--merah);
+        margin-top: 4px;
+        display: none;
+        align-items: center;
+        gap: 3px;
+      }
+      .modal-err i {
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      .btn-modal-login {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--biru), var(--biru2));
+        color: #fff;
+        border: none;
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(0, 59, 112, 0.22);
+        margin-top: 18px;
+      }
+      .btn-modal-login:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 7px 20px rgba(0, 59, 112, 0.28);
+      }
+      .btn-modal-login:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .modal-footer {
+        padding: 12px 24px 18px;
+        text-align: center;
+        font-size: 11px;
+        color: var(--teks3);
+        border-top: 1px solid var(--border);
+      }
+
+      /* ════════════════════════════════
+   RESPONSIVE - PONSEL
+════════════════════════════════ */
+      @media (max-width: 480px) {
+        .topbar {
+          padding: 0 12px;
+          gap: 8px;
+        }
+        .tsep,
+        .tlogo,
+        .tbrand-wrap,
+        .tinfo {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg">
+      <div class="bg-grid"></div>
+      <div class="bg-blob1"></div>
+      <div class="bg-blob2"></div>
+    </div>
+
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="loading">
+      <div class="loading-box">
+        <div class="loading-spinner"></div>
+        <div class="loading-txt" id="loading-txt">Memeriksa nomor HP...</div>
+        <div class="loading-sub" id="loading-sub">Mohon tunggu sebentar</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     TOPBAR FIXED
+══════════════════════════════════════ -->
+    <div class="topbar" id="topbar">
+      <div class="app-brand">
+        <div class="app-logo"><i class="ti ti-ticket"></i></div>
+        <span class="app-name">Tiket<b>PST</b></span>
+      </div>
+      <div class="tsep"></div>
+      <div class="tlogo">
+        <img
+          src="/Logo BPS.png"
+          alt="BPS"
+          style="width: 28px; height: 28px; object-fit: contain"
+        />
+      </div>
+      <div class="tbrand-wrap">
+        <div class="tbrand">Badan Pusat Statistik</div>
+        <div class="tsub">Provinsi Kalimantan Timur</div>
+      </div>
+      <div class="tright">
+        <div class="tinfo">
+          <div class="tclock" id="clk">--:--</div>
+          <div class="tstatus open" id="svc">
+            <div class="status-dot"></div>
+            <span id="svc-lbl">Buka</span>
+          </div>
+        </div>
+        <button
+          class="btn-login"
+          id="btn-login"
+          onclick="window.location.href = 'admin.html'"
+        >
+          <i class="ti ti-lock" id="btn-login-ic"></i
+          ><span id="btn-login-txt">Login</span>
+        </button>
+        <div class="admin-menu" id="idx-admin-menu" style="display: none">
+          <button class="tadmin-av" id="idx-admin-av" onclick="toggleAdminMenu()">
+            A
+          </button>
+          <div class="admin-dropdown" id="admin-dropdown">
+            <div class="admin-dropdown-info">
+              <div class="admin-dropdown-name" id="dd-name">Admin</div>
+              <div class="admin-dropdown-user" id="dd-user">@admin</div>
+            </div>
+            <button class="admin-dropdown-item" onclick="adminLogout()">
+              <i class="ti ti-logout"></i>Keluar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     PROGRESS BAR FIXED
+══════════════════════════════════════ -->
+    <div class="progress-bar">
+      <div class="prog-steps">
+        <div class="ps">
+          <div class="psn act" id="pn1">1</div>
+          <div class="psl act" id="pl1">Cek HP</div>
+        </div>
+        <div class="pline" id="pline1"></div>
+        <div class="ps">
+          <div class="psn" id="pn2">2</div>
+          <div class="psl" id="pl2">Identitas</div>
+        </div>
+        <div class="pline" id="pline2"></div>
+        <div class="ps">
+          <div class="psn" id="pn3">3</div>
+          <div class="psl" id="pl3">Keperluan</div>
+        </div>
+        <div class="pline" id="pline3"></div>
+        <div class="ps">
+          <div class="psn" id="pn4">4</div>
+          <div class="psl" id="pl4">Selesai</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     MAIN PAGE
+══════════════════════════════════════ -->
+    <div class="page">
+      <div class="col">
+        <!-- ══ VIEW 1: CEK HP ══ -->
+        <div class="view on" id="v1">
+          <div class="hero" style="margin-bottom: 0">
+            <div class="hero-inner">
+              <div class="hero-ico">
+                <i class="ti ti-device-mobile-search"></i>
+              </div>
+              <div>
+                <div class="hero-title">Cek Nomor HP</div>
+                <div class="hero-sub">
+                  Masukkan nomor HP Anda untuk memulai. Sistem akan memeriksa
+                  apakah nomor sudah terdaftar.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="ch-ic"><i class="ti ti-phone-check"></i></div>
+              <div>
+                <div class="ch-title">Verifikasi Nomor HP</div>
+                <div class="ch-sub">
+                  Digunakan sebagai identitas utama akun Anda
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-device-mobile"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Nomor HP / WhatsApp <span class="req">*</span>
+                </div>
+                <div class="hp-input-wrap">
+                  <div class="hp-prefix">
+                    <i class="ti ti-brand-whatsapp"></i>+62
+                  </div>
+                  <input
+                    type="tel"
+                    class="fi"
+                    id="hp-input"
+                    placeholder="8xx xxxx xxxx"
+                    maxlength="13"
+                    oninput="onHPInput(this)"
+                    onkeydown="if (event.key === 'Enter') doCekHP();"
+                  />
+                </div>
+                <div class="ferr" id="err-hp">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Nomor HP tidak valid (min. 9 digit)</span>
+                </div>
+                <div class="fhint" id="hint-hp">
+                  <i class="ti ti-info-circle" style="font-size: 12px"></i
+                  >Notifikasi status tiket akan dikirim ke nomor ini via
+                  WhatsApp
+                </div>
+              </div>
+              <div class="ibox ibox-blue" style="margin-top: 4px">
+                <i class="ti ti-shield-check"></i>
+                <p>
+                  Nomor HP berfungsi sebagai identitas unik Anda. Pastikan nomor
+                  aktif dan dapat menerima pesan WhatsApp.
+                </p>
+              </div>
+              <button class="btn btn-blue" id="btn-cek" onclick="doCekHP()">
+                <span id="bcek-txt">Cek Nomor HP</span>
+                <i class="ti ti-search" id="bcek-ic"></i>
+                <div class="spin" id="bcek-spin"></div>
+              </button>
+            </div>
+          </div>
+
+          <div class="help-strip">
+            <i class="ti ti-headset hi"></i>
+            <div style="flex: 1">
+              <div
+                style="font-size: 12px; font-weight: 700; color: var(--teks)"
+              >
+                Butuh Bantuan?
+              </div>
+              <div style="font-size: 11px; color: var(--teks2)">
+                <strong>+6285173006400</strong> &nbsp;·&nbsp;
+                <strong>pst6400@gmail.com</strong>
+              </div>
+            </div>
+            <button
+              class="btn-ghost"
+              style="padding: 7px 11px; font-size: 11px"
+            >
+              <i class="ti ti-phone" style="font-size: 12px"></i>Telepon
+            </button>
+          </div>
+        </div>
+
+        <!-- ══ VIEW 2A: REGISTRASI (belum terdaftar) ══ -->
+        <div class="view" id="v2reg">
+          <div class="hero" style="margin-bottom: 0">
+            <div class="hero-inner">
+              <div class="hero-ico"><i class="ti ti-user-plus"></i></div>
+              <div>
+                <div class="hero-title">Registrasi Identitas Diri</div>
+                <div class="hero-sub">
+                  Nomor HP belum terdaftar. Lengkapi data berikut untuk membuat
+                  akun.
+                </div>
+              </div>
+            </div>
+            <div class="hp-pill">
+              <i class="ti ti-device-mobile"></i>
+              <span id="reg-hp-show">–</span>
+              <button class="btn-ganti" onclick="backToV1()">Ganti</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="ch-ic"><i class="ti ti-forms"></i></div>
+              <div>
+                <div class="ch-title">Data Identitas</div>
+                <div class="ch-sub">
+                  Field bertanda
+                  <span style="color: var(--merah); font-weight: 700">*</span>
+                  wajib diisi
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- DATA PRIBADI -->
+              <div class="sec">
+                <div class="sec-ic"><i class="ti ti-user"></i></div>
+                <div class="sec-label">Data Pribadi</div>
+                <div class="sec-line"></div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-id-badge"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Nama Lengkap <span class="req">*</span>
+                </div>
+                <div class="fi-wrap">
+                  <i class="ico ti ti-user"></i>
+                  <input
+                    type="text"
+                    class="fi"
+                    id="r-nama"
+                    placeholder="Masukkan nama lengkap sesuai KTP"
+                    oninput="chk(this, 'nama')"
+                  />
+                </div>
+                <div class="ferr" id="err-nama">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Nama lengkap wajib diisi</span>
+                </div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-gender-bigender"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Jenis Kelamin <span class="req">*</span>
+                </div>
+                <div class="gender-wrap">
+                  <button class="gender-btn" id="jk-l" onclick="pilihJK('L')">
+                    <i class="ti ti-mars"></i>Laki-laki
+                  </button>
+                  <button class="gender-btn" id="jk-p" onclick="pilihJK('P')">
+                    <i class="ti ti-venus"></i>Perempuan
+                  </button>
+                </div>
+                <div class="ferr" id="err-jk">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Pilih jenis kelamin</span>
+                </div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-cake"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Tahun Lahir <span class="req">*</span>
+                </div>
+                <div class="tahun-block" id="thn-block">
+                  <div class="tahun-top">
+                    <div class="thn-fi-wrap">
+                      <i class="ti ti-calendar ico"></i>
+                      <input
+                        type="number"
+                        class="tahun-fi"
+                        id="thn-input"
+                        min="1950"
+                        max="2008"
+                        placeholder="contoh: 1990"
+                        oninput="onThnInput(this)"
+                        onfocus="
+                          document
+                            .getElementById('thn-block')
+                            .classList.add('focused')
+                        "
+                        onblur="onThnBlur(this)"
+                      />
+                    </div>
+                    <div class="usia-badge" id="usia-badge">
+                      <i class="ti ti-user" style="font-size: 12px"></i
+                      ><span id="usia-txt">– tahun</span>
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    class="thn-slider"
+                    id="thn-sl"
+                    min="1950"
+                    max="2008"
+                    value="1990"
+                    oninput="onThnSlider(this.value)"
+                  />
+                  <div class="thn-range-lbl">
+                    <span>1950</span><span class="mid" id="thn-mid">–</span
+                    ><span>2008</span>
+                  </div>
+                </div>
+                <div class="ferr" id="err-thn">
+                  <i class="ti ti-alert-circle"></i
+                  ><span id="err-thn-txt"
+                    >Masukkan tahun lahir yang valid (1950–2008)</span
+                  >
+                </div>
+              </div>
+
+              <!-- PENDIDIKAN & PEKERJAAN -->
+              <div class="sec">
+                <div class="sec-ic"><i class="ti ti-school"></i></div>
+                <div class="sec-label">Pendidikan & Pekerjaan</div>
+                <div class="sec-line"></div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-certificate"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Pendidikan Terakhir <span class="req">*</span>
+                </div>
+                <div class="didik-wrap">
+                  <button class="sel-btn" onclick="pilihDidik(this, '≤SLTA')">
+                    <i class="ti ti-school"></i>
+                    <div class="sb-label">≤ SLTA</div>
+                    <div class="sb-sub">SD/SMP/SMA/SMK</div>
+                  </button>
+                  <button
+                    class="sel-btn"
+                    onclick="pilihDidik(this, 'D1/D2/D3')"
+                  >
+                    <i class="ti ti-building-bank"></i>
+                    <div class="sb-label">D1/D2/D3</div>
+                    <div class="sb-sub">Diploma</div>
+                  </button>
+                  <button class="sel-btn" onclick="pilihDidik(this, 'D4/S1')">
+                    <i class="ti ti-award"></i>
+                    <div class="sb-label">D4/S1</div>
+                    <div class="sb-sub">Sarjana</div>
+                  </button>
+                  <button class="sel-btn" onclick="pilihDidik(this, 'S2')">
+                    <i class="ti ti-star"></i>
+                    <div class="sb-label">S2</div>
+                    <div class="sb-sub">Magister</div>
+                  </button>
+                  <button class="sel-btn" onclick="pilihDidik(this, 'S3')">
+                    <i class="ti ti-stars"></i>
+                    <div class="sb-label">S3</div>
+                    <div class="sb-sub">Doktor</div>
+                  </button>
+                </div>
+                <div class="ferr" id="err-didik">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Pilih pendidikan terakhir</span>
+                </div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-briefcase"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Pekerjaan <span class="req">*</span>
+                </div>
+                <div class="kerja-wrap">
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(
+                        this,
+                        'Pelajar/Mahasiswa',
+                        'Nama Sekolah / Universitas',
+                        false,
+                      )
+                    "
+                  >
+                    <i class="ti ti-school"></i>
+                    <div class="k-label">Pelajar/Mahasiswa</div>
+                  </button>
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(
+                        this,
+                        'Peneliti',
+                        'Nama Lembaga / Universitas',
+                        false,
+                      )
+                    "
+                  >
+                    <i class="ti ti-microscope"></i>
+                    <div class="k-label">Peneliti/Dosen</div>
+                  </button>
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(
+                        this,
+                        'ASN/TNI/Polri',
+                        'Nama Instansi / Dinas',
+                        false,
+                      )
+                    "
+                  >
+                    <i class="ti ti-building-community"></i>
+                    <div class="k-label">ASN/TNI/Polri</div>
+                  </button>
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(
+                        this,
+                        'Pegawai BUMN/BUMD',
+                        'Nama BUMN / BUMD',
+                        false,
+                      )
+                    "
+                  >
+                    <i class="ti ti-building-factory-2"></i>
+                    <div class="k-label">Pegawai BUMN/BUMD</div>
+                  </button>
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(
+                        this,
+                        'Pegawai Swasta',
+                        'Nama Perusahaan',
+                        false,
+                      )
+                    "
+                  >
+                    <i class="ti ti-building"></i>
+                    <div class="k-label">Pegawai Swasta</div>
+                  </button>
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(this, 'Wiraswasta', 'Nama Usaha', false)
+                    "
+                  >
+                    <i class="ti ti-businessplan"></i>
+                    <div class="k-label">Wiraswasta</div>
+                  </button>
+                  <button
+                    class="kerja-btn"
+                    onclick="
+                      pilihKerja(
+                        this,
+                        'Lainnya',
+                        'Nama Instansi / Tempat Bekerja',
+                        true,
+                      )
+                    "
+                  >
+                    <i class="ti ti-dots-circle-horizontal"></i>
+                    <div class="k-label">Lainnya</div>
+                  </button>
+                </div>
+                <div class="ferr" id="err-kerja">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Pilih salah satu pekerjaan</span>
+                </div>
+                <div class="extra-box" id="extra-box">
+                  <div id="lainnya-grp" style="display: none">
+                    <div class="extra-lbl">
+                      <i class="ti ti-pencil" style="font-size: 13px"></i
+                      >Sebutkan Pekerjaan Anda
+                      <span style="color: var(--merah)">*</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="fi"
+                      id="r-kerja-lainnya"
+                      placeholder="contoh: Petani, Nelayan, Freelancer, dll."
+                      oninput="chk(this, 'kerja-lainnya')"
+                    />
+                    <div
+                      class="ferr"
+                      id="err-kerja-lainnya"
+                      style="margin-top: 4px"
+                    >
+                      <i class="ti ti-alert-circle"></i
+                      ><span>Pekerjaan wajib diisi</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="extra-lbl">
+                      <i class="ti ti-building" style="font-size: 13px"></i
+                      ><span id="instansi-lbl"
+                        >Nama Instansi / Tempat Bekerja</span
+                      >
+                      <span style="color: var(--merah)">*</span>
+                    </div>
+                    <div class="fi-wrap">
+                      <i class="ico ti ti-building"></i>
+                      <input
+                        type="text"
+                        class="fi"
+                        id="r-instansi"
+                        placeholder=""
+                        oninput="chk(this, 'instansi')"
+                      />
+                    </div>
+                    <div class="ferr" id="err-instansi">
+                      <i class="ti ti-alert-circle"></i
+                      ><span>Nama instansi wajib diisi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- KONTAK -->
+              <div class="sec">
+                <div class="sec-ic"><i class="ti ti-mail"></i></div>
+                <div class="sec-label">Informasi Kontak</div>
+                <div class="sec-line"></div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-at"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Alamat Email <span class="req">*</span>
+                </div>
+                <div class="fi-wrap">
+                  <i class="ico ti ti-mail"></i>
+                  <input
+                    type="email"
+                    class="fi"
+                    id="r-email"
+                    placeholder="contoh@email.com"
+                    oninput="chk(this, 'email')"
+                  />
+                </div>
+                <div class="ferr" id="err-email">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Format email tidak valid</span>
+                </div>
+              </div>
+
+              <div class="ibox ibox-gold" style="margin-top: 2px">
+                <i class="ti ti-info-circle"></i>
+                <p>Pastikan email Anda aktif.</p>
+              </div>
+
+              <button
+                class="btn btn-blue"
+                id="btn-reg"
+                onclick="doRegistrasi()"
+              >
+                <span id="breg-txt">Daftar & Lanjutkan</span>
+                <i class="ti ti-arrow-right" id="breg-ic"></i>
+                <div class="spin" id="breg-spin"></div>
+              </button>
+              <div style="text-align: center; margin-top: 10px">
+                <button class="btn-ghost" onclick="backToV1()">
+                  <i class="ti ti-arrow-left" style="font-size: 12px"></i>Ganti
+                  Nomor HP
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ VIEW 2B: KONFIRMASI (sudah terdaftar) ══ -->
+        <div class="view" id="v2found">
+          <div class="hero" style="margin-bottom: 0">
+            <div class="hero-inner">
+              <div class="hero-ico"><i class="ti ti-user-check"></i></div>
+              <div>
+                <div class="hero-title">Nomor Ditemukan</div>
+                <div class="hero-sub">
+                  Nomor HP sudah terdaftar. Konfirmasi identitas Anda untuk
+                  melanjutkan.
+                </div>
+              </div>
+            </div>
+            <div class="hp-pill">
+              <i class="ti ti-device-mobile"></i>
+              <span id="found-hp-show">–</span>
+              <button class="btn-ganti" onclick="backToV1()">Ganti</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="ch-ic green"><i class="ti ti-user-check"></i></div>
+              <div>
+                <div class="ch-title">Konfirmasi Identitas</div>
+                <div class="ch-sub">
+                  Verifikasi bahwa Anda adalah pemilik akun ini
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="ibox ibox-green" style="margin-bottom: 16px">
+                <i class="ti ti-circle-check"></i>
+                <p>
+                  Nomor HP <strong id="found-hp-disp">–</strong> sudah terdaftar
+                  di sistem BPS Kaltim.
+                </p>
+              </div>
+              <div class="prow" style="margin-bottom: 16px">
+                <div class="avatar" id="found-av">?</div>
+                <div>
+                  <div class="prow-name" id="found-name">–</div>
+                  <div class="prow-meta" id="found-meta">–</div>
+                  <div class="badge badge-green">
+                    <i class="ti ti-shield-check" style="font-size: 11px"></i
+                    >Terverifikasi
+                  </div>
+                </div>
+              </div>
+              <!--div class="fgrp">
+          <div class="fl">Konfirmasi nama lengkap Anda <span class="req">*</span></div>
+          <div class="fi-wrap"><i class="ico ti ti-user"></i>
+            <input type="text" class="fi" id="konfirm-nama" placeholder="Ketik nama sesuai data terdaftar" oninput="chkKonfirm(this)">
+          </div>
+          <div class="ferr" id="err-konfirm"><i class="ti ti-alert-circle"></i><span>Nama tidak sesuai data yang terdaftar</span></div>
+        </!--div-->
+              <button class="btn btn-green" onclick="doKonfirmasi()">
+                <i class="ti ti-check"></i>Konfirmasi & Lanjutkan
+              </button>
+              <div style="text-align: center; margin-top: 10px">
+                <button class="btn-ghost" onclick="backToV1()">
+                  <i class="ti ti-arrow-left" style="font-size: 12px"></i>Ganti
+                  Nomor HP
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ VIEW 3: KEPERLUAN ══ -->
+        <div class="view" id="v3">
+          <div class="hero" style="margin-bottom: 0">
+            <div class="hero-inner">
+              <div class="hero-ico"><i class="ti ti-clipboard-list"></i></div>
+              <div>
+                <div class="hero-title">Isi Keperluan</div>
+                <div class="hero-sub">
+                  Sampaikan kebutuhan Anda kepada petugas BPS Kalimantan Timur.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head grad-blue">
+              <div class="ch-ic"><i class="ti ti-clipboard-list"></i></div>
+              <div>
+                <div class="ch-title">Form Keperluan</div>
+                <div class="ch-sub">
+                  Isi dengan lengkap agar permohonan cepat diproses
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- INFO PEMOHON -->
+              <div class="prow" style="margin-bottom: 16px" id="k-prow">
+                <div class="avatar" id="k-av">?</div>
+                <div style="flex: 1">
+                  <div class="prow-name" id="k-name">–</div>
+                  <div class="prow-meta" id="k-meta">–</div>
+                </div>
+                <span class="badge badge-green" id="k-badge"
+                  ><i class="ti ti-check" style="font-size: 11px"></i
+                  >Terverifikasi</span
+                >
+              </div>
+
+              <!-- KATEGORI -->
+              <div class="fgrp">
+                <div class="fl">
+                  <i
+                    class="ti ti-apps"
+                    style="font-size: 13px; color: var(--biru2)"
+                  ></i
+                  >Kategori Layanan <span class="req">*</span>
+                </div>
+                <div class="chip-wrap" id="chips">
+                  <button
+                    class="chip"
+                    onclick="pilihChip(this, 'Permintaan Data')"
+                  >
+                    <i class="ti ti-database"></i>Permintaan Data
+                  </button>
+                  <button class="chip" onclick="pilihChip(this, 'Konsultasi')">
+                    <i class="ti ti-message-circle"></i>Konsultasi
+                  </button>
+                  <button class="chip" onclick="pilihChip(this, 'Lainnya')">
+                    <i class="ti ti-dots"></i>Lainnya
+                  </button>
+                </div>
+                <div class="ferr" id="err-kat">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Pilih salah satu kategori</span>
+                </div>
+              </div>
+
+              <!-- SUBJEK & URAIAN -->
+              <div class="fgrp" style="margin-top: 14px">
+                <div class="fl">
+                  Subjek / Judul Permohonan <span class="req">*</span>
+                </div>
+                <input
+                  type="text"
+                  class="fi"
+                  id="k-subjek"
+                  placeholder="Ringkasan singkat keperluan Anda"
+                  oninput="chk(this, 'k-subjek')"
+                />
+                <div class="ferr" id="err-k-subjek">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Subjek wajib diisi</span>
+                </div>
+              </div>
+
+              <div class="fgrp">
+                <div class="fl">
+                  Uraian Keperluan <span class="req">*</span>
+                </div>
+                <textarea
+                  class="fi fi-ta"
+                  id="k-uraian"
+                  placeholder="Jelaskan secara rinci apa yang Anda butuhkan. Semakin detail, semakin cepat kami dapat membantu..."
+                  oninput="chk(this, 'k-uraian')"
+                ></textarea>
+                <div class="ferr" id="err-k-uraian">
+                  <i class="ti ti-alert-circle"></i
+                  ><span>Uraian wajib diisi</span>
+                </div>
+              </div>
+
+              <button class="btn btn-blue" id="btn-submit" onclick="doSubmit()">
+                <span id="bsub-txt">Kirim Permohonan</span>
+                <i class="ti ti-send" id="bsub-ic"></i>
+                <div class="spin" id="bsub-spin"></div>
+              </button>
+              <div style="text-align: center; margin-top: 10px">
+                <button class="btn-ghost" onclick="backToV2()">
+                  <i class="ti ti-arrow-left" style="font-size: 12px"></i
+                  >Kembali
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ VIEW 4: SUKSES ══ -->
+        <div class="view" id="v4">
+          <div class="card">
+            <div class="card-head grad-green">
+              <div class="ch-ic"><i class="ti ti-circle-check"></i></div>
+              <div>
+                <div class="ch-title">Permohonan Berhasil Dikirim!</div>
+                <div class="ch-sub">Tim BPS Kaltim akan segera merespons</div>
+              </div>
+            </div>
+            <div
+              class="card-body"
+              style="text-align: center; padding: 32px 24px"
+            >
+              <div class="suc-ring"><i class="ti ti-check"></i></div>
+              <div
+                style="
+                  font-size: 18px;
+                  font-weight: 800;
+                  color: var(--teks);
+                  margin-bottom: 10px;
+                "
+              >
+                Terima Kasih!
+              </div>
+              <div
+                style="
+                  font-size: 13px;
+                  color: var(--teks2);
+                  line-height: 1.8;
+                  max-width: 360px;
+                  margin: 0 auto;
+                "
+              >
+                Permohonan Anda telah kami terima.<br />
+                Anda bisa melanjutkan konsultasi statistik melalui WhatsApp
+                kami.
+              </div>
+
+              <!-- WA CARD -->
+              <div
+                style="
+                  background: linear-gradient(135deg, #128c7e, #25d366);
+                  border-radius: var(--r2);
+                  padding: 18px 20px;
+                  margin: 22px 0 10px;
+                  display: flex;
+                  align-items: center;
+                  gap: 14px;
+                  text-align: left;
+                "
+              >
+                <div
+                  style="
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                  "
+                >
+                  <i
+                    class="ti ti-brand-whatsapp"
+                    style="font-size: 24px; color: #fff"
+                  ></i>
+                </div>
+                <div style="flex: 1">
+                  <div
+                    style="
+                      font-size: 11px;
+                      color: rgba(255, 255, 255, 0.75);
+                      font-weight: 600;
+                      margin-bottom: 2px;
+                    "
+                  >
+                    Konsultasi via WhatsApp
+                  </div>
+                  <div
+                    style="
+                      font-size: 16px;
+                      font-weight: 800;
+                      color: #fff;
+                      letter-spacing: 0.3px;
+                    "
+                    id="wa-number"
+                  >
+                    0895-xxxx-xxxx
+                  </div>
+                  <div
+                    style="
+                      font-size: 10px;
+                      color: rgba(255, 255, 255, 0.65);
+                      margin-top: 2px;
+                    "
+                  >
+                    PST BPS Kalimantan Timur
+                  </div>
+                </div>
+                <i
+                  class="ti ti-chevron-right"
+                  style="font-size: 20px; color: rgba(255, 255, 255, 0.6)"
+                ></i>
+              </div>
+
+              <a
+                id="wa-link"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                style="text-decoration: none; display: block"
+              >
+                <button
+                  class="btn btn-green"
+                  style="
+                    margin-top: 0;
+                    background: linear-gradient(135deg, #128c7e, #25d366);
+                    box-shadow: 0 4px 14px rgba(18, 140, 126, 0.3);
+                  "
+                >
+                  <i class="ti ti-brand-whatsapp" style="font-size: 18px"></i>
+                  Buka WhatsApp Sekarang
+                </button>
+              </a>
+
+              <div class="divv" style="margin: 18px 0"></div>
+
+              <button
+                class="btn btn-ghost"
+                style="width: auto; padding: 9px 20px; margin: 0 auto"
+                onclick="buatBaru()"
+              >
+                <i class="ti ti-plus" style="font-size: 13px"></i>Ajukan
+                Permohonan Baru
+              </button>
+            </div>
+          </div>
+
+          <div class="help-strip">
+            <i class="ti ti-headset hi"></i>
+            <div style="flex: 1">
+              <div
+                style="font-size: 12px; font-weight: 700; color: var(--teks)"
+              >
+                Butuh Bantuan Lain?
+              </div>
+              <div style="font-size: 11px; color: var(--teks2)">
+                <strong>(0541) 732793</strong> &nbsp;·&nbsp;
+                <strong>bps6400@bps.go.id</strong>
+              </div>
+            </div>
+            <button
+              class="btn-ghost"
+              style="padding: 7px 11px; font-size: 11px"
+            >
+              <i class="ti ti-phone" style="font-size: 12px"></i>Telepon
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      © 2026 BPS Provinsi Kalimantan Timur &nbsp;·&nbsp;
+      <a href="https://kaltim.bps.go.id" target="_blank">kaltim.bps.go.id</a>
+      &nbsp;·&nbsp;
+      <a href="https://dataetam.com" target="_blank">dataetam.com</a>
+      &nbsp;·&nbsp; v1.0
+    </div>
+
+    <script>
+      // ════════════════════════════════════
+      // CONFIG
+      // ════════════════════════════════════
+      var CEK_URL = "/api/cek-hp"; // GET  ?no_hp=08xx
+      var REGISTER_URL = "/api/register"; // POST JSON
+      var TIKET_URL = "/api/tiket"; // POST JSON
+      var WA_NUMBER = "6285173006400"; // ← ganti nomor WA PST BPS Kaltim (format 628xx)
+
+      // DB simulasi untuk demo
+      var DB_DEMO = {
+        81234567890: {
+          nama: "Ahmad Fauzi",
+          instansi: "Dinas Pertanian Kaltim",
+        },
+      };
+
+      // ════════════════════════════════════
+      // STATE
+      // ════════════════════════════════════
+      var state = {
+        noHp: "",
+        noHpFormatted: "",
+        isRegistered: false,
+        // data user
+        nama: "",
+        jk: "",
+        tahun: null,
+        didik: "",
+        kerja: "",
+        isLainnya: false,
+        instansi: "",
+        email: "",
+        // keperluan
+        kategori: "",
+        subjek: "",
+        uraian: "",
+        urgensi: "Sedang",
+        kunjungan: "Online",
+        // ui
+        currentView: "v1",
+        prevView: "v1",
+      };
+
+      var didikSel = null,
+        kerjaSel = null,
+        chipSel = null;
+      var YEAR_NOW = new Date().getFullYear();
+
+      // ════════════════════════════════════
+      // CLOCK & STATUS
+      // ════════════════════════════════════
+      function updateClock() {
+        var n = new Date();
+        document.getElementById("clk").textContent = n.toLocaleTimeString(
+          "id-ID",
+          { hour: "2-digit", minute: "2-digit" },
+        );
+        var d = n.getDay(),
+          h = n.getHours(),
+          m = n.getMinutes();
+        var open =
+          (d >= 1 && d <= 4 && (h > 7 || (h === 7 && m >= 30)) && h < 16) ||
+          (d === 5 &&
+            (h > 7 || (h === 7 && m >= 30)) &&
+            (h < 16 || (h === 16 && m <= 30)));
+        var el = document.getElementById("svc");
+        el.className = "tstatus " + (open ? "open" : "closed");
+        document.getElementById("svc-lbl").textContent = open
+          ? "Buka"
+          : "Tutup";
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // ════════════════════════════════════
+      // TOMBOL LOGIN → PORTAL ADMIN
+      // ════════════════════════════════════
+      if (localStorage.getItem("admin_token")) {
+        document.getElementById("btn-login-ic").className = "ti ti-layout-dashboard";
+        document.getElementById("btn-login-txt").textContent = "Portal Admin";
+
+        var adminInfoRaw = localStorage.getItem("admin_info");
+        if (adminInfoRaw) {
+          try {
+            var adminInfo = JSON.parse(adminInfoRaw);
+            var ini = (adminInfo.nama_lengkap || adminInfo.username || "A")
+              .split(" ")
+              .map(function (w) {
+                return w[0];
+              })
+              .slice(0, 2)
+              .join("")
+              .toUpperCase();
+            document.getElementById("idx-admin-av").textContent = ini;
+            document.getElementById("dd-name").textContent =
+              adminInfo.nama_lengkap || adminInfo.username || "Administrator";
+            document.getElementById("dd-user").textContent =
+              "@" + (adminInfo.username || "admin");
+            document.getElementById("idx-admin-menu").style.display = "block";
+          } catch (e) {}
+        }
+      }
+
+      function toggleAdminMenu() {
+        document.getElementById("admin-dropdown").classList.toggle("open");
+      }
+
+      document.addEventListener("click", function (e) {
+        var menu = document.getElementById("admin-dropdown");
+        var av = document.getElementById("idx-admin-av");
+        if (
+          menu &&
+          menu.classList.contains("open") &&
+          !menu.contains(e.target) &&
+          e.target !== av
+        ) {
+          menu.classList.remove("open");
+        }
+      });
+
+      function adminLogout() {
+        localStorage.removeItem("admin_token");
+        localStorage.removeItem("admin_info");
+        location.reload();
+      }
+
+      window.addEventListener("scroll", function () {
+        document
+          .getElementById("topbar")
+          .classList.toggle("scrolled", window.scrollY > 10);
+      });
+
+      // ════════════════════════════════════
+      // PROGRESS STEPS
+      // ════════════════════════════════════
+      var stepMap = { v1: 1, v2reg: 2, v2found: 2, v3: 3, v4: 4 };
+      function setProgress(viewId) {
+        var n = stepMap[viewId] || 1;
+        for (var i = 1; i <= 4; i++) {
+          var pn = document.getElementById("pn" + i);
+          var pl = document.getElementById("pl" + i);
+          if (i < n) {
+            pn.innerHTML = '<i class="ti ti-check" style="font-size:10px"></i>';
+            pn.className = "psn done";
+            pl.className = "psl done";
+          } else if (i === n) {
+            pn.innerHTML = i;
+            pn.className = "psn act";
+            pl.className = "psl act";
+          } else {
+            pn.innerHTML = i;
+            pn.className = "psn";
+            pl.className = "psl";
+          }
+          if (i < 4) {
+            var ln = document.getElementById("pline" + i);
+            if (ln) ln.className = "pline" + (i < n ? " done" : "");
+          }
+        }
+      }
+
+      // ════════════════════════════════════
+      // VIEW SWITCHING
+      // ════════════════════════════════════
+      function showView(id) {
+        ["v1", "v2reg", "v2found", "v3", "v4"].forEach(function (v) {
+          document.getElementById(v).classList.remove("on");
+        });
+        document.getElementById(id).classList.add("on");
+        state.prevView = state.currentView;
+        state.currentView = id;
+        setProgress(id);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function backToV1() {
+        showView("v1");
+      }
+      function backToV2() {
+        showView(state.isRegistered ? "v2found" : "v2reg");
+      }
+
+      // ════════════════════════════════════
+      // LOADING OVERLAY
+      // ════════════════════════════════════
+      function showLoading(txt, sub) {
+        document.getElementById("loading-txt").textContent =
+          txt || "Memproses...";
+        document.getElementById("loading-sub").textContent =
+          sub || "Mohon tunggu";
+        document.getElementById("loading").classList.add("show");
+      }
+      function hideLoading() {
+        document.getElementById("loading").classList.remove("show");
+      }
+
+      // ════════════════════════════════════
+      // VIEW 1 — CEK HP
+      // ════════════════════════════════════
+      function onHPInput(inp) {
+        var v = inp.value.replace(/\D/g, "");
+        if (v[0] === "0") v = v.substring(1);
+        inp.value = v;
+        var ok = v.length >= 9 && v.length <= 13;
+        inp.classList.toggle("ok", ok);
+        inp.classList.toggle("err", !ok && v.length > 0);
+        document.getElementById("err-hp").style.display =
+          !ok && v.length > 0 ? "flex" : "none";
+      }
+
+      function maskNama(nama) {
+        if (!nama || nama.length <= 10) return nama;
+        return nama.substring(0, 10) + "*".repeat(nama.length - 10);
+      }
+
+      function doCekHP() {
+        var v = document.getElementById("hp-input").value.replace(/\D/g, "");
+        if (v.length < 9) {
+          document.getElementById("err-hp").style.display = "flex";
+          document.getElementById("hp-input").classList.add("err");
+          return;
+        }
+        state.noHp = v;
+        state.noHpFormatted = "+62 " + v;
+
+        showLoading("Memeriksa nomor HP...", "Mohon tunggu sebentar");
+
+        // FETCH (dengan fallback demo)
+        fetch(CEK_URL + "?no_hp=0" + v)
+          .then(function (r) {
+            return r.json();
+          })
+          .catch(function () {
+            // demo fallback
+            var u = DB_DEMO[v];
+            return u ? { terdaftar: true, data: u } : { terdaftar: false };
+          })
+          .then(function (res) {
+            console.log(res);
+            hideLoading();
+            if (res.data.terdaftar) {
+              state.isRegistered = true;
+              var u = res.data.data || { nama: "Pengguna", instansi: "" };
+              state.nama = u.nama || "";
+              // isi tampilan found
+              document.getElementById("found-hp-show").textContent =
+                state.noHpFormatted;
+              document.getElementById("found-hp-disp").textContent = "+62 " + v;
+              document.getElementById("found-name").textContent =
+                maskNama(u.nama) || "–";
+              document.getElementById("found-meta").textContent =
+                "0" + v + (u.instansi ? " · " + u.instansi : "");
+              document.getElementById("found-av").textContent = (u.nama || "?")
+                .split(" ")
+                .map(function (w) {
+                  return w[0];
+                })
+                .slice(0, 2)
+                .join("")
+                .toUpperCase();
+              showView("v2found");
+            } else {
+              state.isRegistered = false;
+              document.getElementById("reg-hp-show").textContent =
+                state.noHpFormatted;
+              showView("v2reg");
+            }
+          });
+      }
+
+      // ════════════════════════════════════
+      // VIEW 2B — KONFIRMASI
+      // ════════════════════════════════════
+      function chkKonfirm(inp) {
+        var v = inp.value.trim().toLowerCase();
+        var parts = (state.nama || "").toLowerCase().split(" ");
+        var match = parts.some(function (p) {
+          return v.includes(p) && p.length > 2;
+        });
+        inp.classList.toggle("ok", match && v.length > 0);
+        inp.classList.toggle("err", !match && v.length > 2);
+        document.getElementById("err-konfirm").style.display =
+          !match && v.length > 2 ? "flex" : "none";
+      }
+
+      function doKonfirmasi() {
+        // var v = document
+        //   .getElementById("konfirm-nama")
+        //   .value.trim()
+        //   .toLowerCase();
+        // var parts = (state.nama || "").toLowerCase().split(" ");
+        // var match = parts.some(function (p) {
+        //   return v.includes(p) && p.length > 2;
+        // });
+        // if (!v || !match) {
+        //   document.getElementById("err-konfirm").style.display = "flex";
+        //   document.getElementById("konfirm-nama").classList.add("err");
+        //   return;
+        // }
+        goToKeperluan();
+      }
+
+      // ════════════════════════════════════
+      // VIEW 2A — REGISTRASI
+      // ════════════════════════════════════
+      function chk(inp, type) {
+        var v = inp.value.trim();
+        var ok = v.length >= 2;
+        if (type === "email") ok = /\S+@\S+\.\S+/.test(v);
+        inp.classList.toggle("ok", ok && v.length > 0);
+        inp.classList.toggle("err", !ok && v.length > 0);
+        var e = document.getElementById("err-" + type);
+        if (e && (ok || v.length === 0)) e.style.display = "none";
+      }
+
+      function pilihJK(v) {
+        state.jk = v;
+        document.getElementById("jk-l").className =
+          "gender-btn" + (v === "L" ? " sel-l" : "");
+        document.getElementById("jk-p").className =
+          "gender-btn" + (v === "P" ? " sel-p" : "");
+        document.getElementById("err-jk").style.display = "none";
+      }
+
+      // TAHUN
+      function setThnState(v) {
+        var block = document.getElementById("thn-block");
+        var badge = document.getElementById("usia-badge");
+        var usiaTxt = document.getElementById("usia-txt");
+        var inp = document.getElementById("thn-input");
+        var sl = document.getElementById("thn-sl");
+        var mid = document.getElementById("thn-mid");
+        var errEl = document.getElementById("err-thn");
+        block.classList.remove("focused", "has-ok", "has-err");
+        inp.classList.remove("ok", "err-b");
+        badge.classList.remove("ok", "err");
+        errEl.style.display = "none";
+        if (!v || v === "") {
+          state.tahun = null;
+          usiaTxt.textContent = "– tahun";
+          return;
+        }
+        var n = parseInt(v);
+        if (isNaN(n) || n < 1950 || n > 2008) {
+          block.classList.add("has-err");
+          inp.classList.add("err-b");
+          badge.classList.add("err");
+          document.getElementById("err-thn-txt").textContent = isNaN(n)
+            ? "Masukkan angka tahun"
+            : n < 1950
+              ? "Tahun terlalu kecil (min 1950)"
+              : "Tahun terlalu besar (maks 2008)";
+          errEl.style.display = "flex";
+          usiaTxt.textContent = "Tidak valid";
+          state.tahun = null;
+          return;
+        }
+        state.tahun = n;
+        usiaTxt.textContent = YEAR_NOW - n + " tahun";
+        block.classList.add("has-ok");
+        inp.classList.add("ok");
+        badge.classList.add("ok");
+        errEl.style.display = "none";
+        var clamp = Math.min(Math.max(n, 1950), 2008);
+        sl.value = clamp;
+        mid.textContent = n;
+        var pct = ((clamp - 1950) / (2008 - 1950)) * 100;
+        sl.style.background =
+          "linear-gradient(to right,var(--biru2) 0%,var(--biru2) " +
+          pct +
+          "%,var(--border) " +
+          pct +
+          "%,var(--border) 100%)";
+      }
+      function onThnInput(inp) {
+        var raw = inp.value.replace(/\D/g, "").slice(0, 4);
+        inp.value = raw;
+        if (raw.length === 4) setThnState(raw);
+        else {
+          state.tahun = null;
+          document
+            .getElementById("thn-block")
+            .classList.remove("has-ok", "has-err");
+          inp.classList.remove("ok", "err-b");
+          document.getElementById("usia-badge").classList.remove("ok", "err");
+          document.getElementById("usia-txt").textContent = "– tahun";
+          document.getElementById("err-thn").style.display = "none";
+          document.getElementById("thn-mid").textContent = raw || "–";
+        }
+      }
+      function onThnBlur(inp) {
+        document.getElementById("thn-block").classList.remove("focused");
+        if (inp.value.length > 0 && inp.value.length < 4)
+          setThnState(inp.value);
+      }
+      function onThnSlider(v) {
+        v = parseInt(v);
+        document.getElementById("thn-input").value = v;
+        setThnState(v);
+      }
+
+      function pilihDidik(el, v) {
+        if (didikSel) didikSel.classList.remove("sel");
+        el.classList.add("sel");
+        didikSel = el;
+        state.didik = v;
+        document.getElementById("err-didik").style.display = "none";
+      }
+
+      function pilihKerja(el, v, lbl, isLainnya) {
+        if (kerjaSel) kerjaSel.classList.remove("sel");
+        el.classList.add("sel");
+        kerjaSel = el;
+        state.kerja = v;
+        state.isLainnya = isLainnya;
+        document.getElementById("err-kerja").style.display = "none";
+        var box = document.getElementById("extra-box");
+        box.classList.add("show");
+        var lg = document.getElementById("lainnya-grp");
+        lg.style.display = isLainnya ? "block" : "none";
+        if (!isLainnya) {
+          document.getElementById("r-kerja-lainnya").value = "";
+          document.getElementById("err-kerja-lainnya").style.display = "none";
+          document
+            .getElementById("r-kerja-lainnya")
+            .classList.remove("ok", "err");
+        }
+        document.getElementById("instansi-lbl").textContent =
+          lbl || "Nama Instansi / Tempat Bekerja";
+        document.getElementById("r-instansi").placeholder =
+          "Masukkan " + (lbl || "nama instansi").toLowerCase();
+      }
+
+      function doRegistrasi() {
+        var nama = document.getElementById("r-nama").value.trim();
+        var email = document.getElementById("r-email").value.trim();
+        var kl = document.getElementById("r-kerja-lainnya").value.trim();
+        var inst = document.getElementById("r-instansi").value.trim();
+        var ok = true;
+        if (!nama) {
+          document.getElementById("err-nama").style.display = "flex";
+          document.getElementById("r-nama").classList.add("err");
+          ok = false;
+        }
+        if (!state.jk) {
+          document.getElementById("err-jk").style.display = "flex";
+          ok = false;
+        }
+        if (!state.tahun) {
+          document.getElementById("err-thn-txt").textContent =
+            "Tahun lahir wajib diisi";
+          document.getElementById("err-thn").style.display = "flex";
+          document.getElementById("thn-block").classList.add("has-err");
+          ok = false;
+        }
+        if (!state.didik) {
+          document.getElementById("err-didik").style.display = "flex";
+          ok = false;
+        }
+        if (!state.kerja) {
+          document.getElementById("err-kerja").style.display = "flex";
+          ok = false;
+        }
+        if (state.isLainnya && !kl) {
+          document.getElementById("err-kerja-lainnya").style.display = "flex";
+          document.getElementById("r-kerja-lainnya").classList.add("err");
+          ok = false;
+        }
+        if (state.kerja && !inst) {
+          document.getElementById("err-instansi").style.display = "flex";
+          document.getElementById("r-instansi").classList.add("err");
+          ok = false;
+        }
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
+          document.getElementById("err-email").style.display = "flex";
+          document.getElementById("r-email").classList.add("err");
+          ok = false;
+        }
+        if (!ok) {
+          var fe = document.querySelector(
+            '.ferr[style*="flex"],.tahun-block.has-err',
+          );
+          if (fe) fe.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+
+        state.nama = nama;
+        state.email = email;
+        state.instansi = inst;
+        var kerjaDisplay = state.isLainnya ? kl : state.kerja;
+
+        var payload = {
+          nama: nama,
+          jk: state.jk,
+          tahun_lahir: state.tahun,
+          pendidikan: state.didik,
+          pekerjaan: kerjaDisplay,
+          tempat_bekerja: inst,
+          email: email,
+          no_hp: "0" + state.noHp,
+        };
+
+        showLoading("Mendaftarkan akun...", "Menyimpan data Anda");
+
+        fetch(REGISTER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .catch(function () {
+            return { ok: true };
+          }) // demo fallback
+          .then(function () {
+            hideLoading();
+            goToKeperluan();
+          });
+      }
+
+      // ════════════════════════════════════
+      // GO TO KEPERLUAN
+      // ════════════════════════════════════
+      function goToKeperluan() {
+        var nama = state.nama || "Pengguna";
+        document.getElementById("k-av").textContent = nama
+          .split(" ")
+          .map(function (w) {
+            return w[0];
+          })
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+        document.getElementById("k-name").textContent = nama;
+        document.getElementById("k-meta").textContent =
+          "+62 " + state.noHp + (state.instansi ? " · " + state.instansi : "");
+        document.getElementById("k-badge").innerHTML = state.isRegistered
+          ? '<i class="ti ti-shield-check" style="font-size:11px"></i>Terverifikasi'
+          : '<i class="ti ti-user-plus" style="font-size:11px"></i>Baru Daftar';
+        document.getElementById("k-badge").className =
+          "badge " + (state.isRegistered ? "badge-green" : "badge-gold");
+        showView("v3");
+      }
+
+      // ════════════════════════════════════
+      // VIEW 3 — KEPERLUAN
+      // ════════════════════════════════════
+      function pilihChip(el, v) {
+        document.querySelectorAll(".chip").forEach(function (c) {
+          c.classList.remove("sel");
+        });
+        el.classList.add("sel");
+        state.kategori = v;
+        document.getElementById("err-kat").style.display = "none";
+      }
+
+      function doSubmit() {
+        var chip = document.querySelector(".chip.sel");
+        var subjek = document.getElementById("k-subjek").value.trim();
+        var uraian = document.getElementById("k-uraian").value.trim();
+        var ok = true;
+        if (!chip) {
+          document.getElementById("err-kat").style.display = "flex";
+          ok = false;
+        }
+        if (!subjek) {
+          document.getElementById("err-k-subjek").style.display = "flex";
+          document.getElementById("k-subjek").classList.add("err");
+          ok = false;
+        }
+        if (!uraian) {
+          document.getElementById("err-k-uraian").style.display = "flex";
+          document.getElementById("k-uraian").classList.add("err");
+          ok = false;
+        }
+        if (!ok) {
+          var fe = document.querySelector('.ferr[style*="flex"]');
+          if (fe) fe.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+
+        state.subjek = subjek;
+        state.uraian = uraian;
+
+        var payload = {
+          no_hp: "0" + state.noHp,
+          nama: state.nama,
+          kategori: state.kategori,
+          subjek: state.subjek,
+          uraian: state.uraian,
+        };
+
+        showLoading("Mengirim permohonan...", "Mohon tunggu sebentar");
+
+        fetch(TIKET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .catch(function () {
+            return { ok: true };
+          })
+          .then(function () {
+            hideLoading();
+            // set nomor WA display & link
+            var waDisplay = "0" + WA_NUMBER.replace(/^62/, "");
+            document.getElementById("wa-number").textContent = waDisplay;
+            // pesan WA otomatis
+            var msg =
+              "Halo BPS Kaltim, saya " +
+              state.nama +
+              " (" +
+              ("0" + state.noHp) +
+              ") ingin konsultasi mengenai: " +
+              state.kategori +
+              " - " +
+              state.subjek;
+            document.getElementById("wa-link").href =
+              "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+            showView("v4");
+          });
+      }
+
+      // ════════════════════════════════════
+      // MODAL LOGIN
+      // ════════════════════════════════════
+      var LOGIN_URL = "/api/login"; // ← ganti sesuai endpoint backend
+
+      function togglePw() {
+        var inp = document.getElementById("l-pass");
+        var ic = document.getElementById("pw-ic");
+        if (inp.type === "password") {
+          inp.type = "text";
+          ic.className = "ti ti-eye-off";
+        } else {
+          inp.type = "password";
+          ic.className = "ti ti-eye";
+        }
+      }
+
+      // ════════════════════════════════════
+      // VIEW 4 — SUKSES
+      // ════════════════════════════════════
+      function buatBaru() {
+        state = {
+          noHp: "",
+          noHpFormatted: "",
+          isRegistered: false,
+          nama: "",
+          jk: "",
+          tahun: null,
+          didik: "",
+          kerja: "",
+          isLainnya: false,
+          instansi: "",
+          email: "",
+          kategori: "",
+          subjek: "",
+          uraian: "",
+          currentView: "v1",
+          prevView: "v1",
+        };
+        document.getElementById("hp-input").value = "";
+        document.getElementById("hp-input").classList.remove("ok", "err");
+        if (didikSel) {
+          didikSel.classList.remove("sel");
+          didikSel = null;
+        }
+        if (kerjaSel) {
+          kerjaSel.classList.remove("sel");
+          kerjaSel = null;
+        }
+        document.querySelectorAll(".chip").forEach(function (c) {
+          c.classList.remove("sel");
+        });
+        document.getElementById("extra-box").classList.remove("show");
+        [
+          "r-nama",
+          "r-email",
+          "r-instansi",
+          "r-kerja-lainnya",
+          "konfirm-nama",
+          "k-subjek",
+          "k-uraian",
+        ].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.value = "";
+            el.classList.remove("ok", "err");
+          }
+        });
+        showView("v1");
+      }
+    </script>
+  </body>
+</html>

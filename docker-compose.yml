@@ -1,0 +1,12 @@
+services:
+  # ── API ───────────────────────────────────────────────────────────────────
+  api:
+    build: .
+    container_name: tiket-bps-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - ./public:/app/public # mount frontend HTML

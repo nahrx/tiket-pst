@@ -1,0 +1,2788 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Tiket PST BPS Kaltim</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --biru: #003b70;
+        --biru2: #0056a6;
+        --biru3: #1a7cc9;
+        --biru-light: #e8f2fa;
+        --biru-mid: #c2ddef;
+        --hijau: #1a7940;
+        --hijau-light: #d4edda;
+        --merah: #c0392b;
+        --merah-light: #fdecea;
+        --emas: #b7860b;
+        --emas-light: #fef3d0;
+        --abu: #f0f4f9;
+        --putih: #ffffff;
+        --teks: #1a2333;
+        --teks2: #566275;
+        --teks3: #8898aa;
+        --border: #dde3ee;
+        --sidebar-w: 240px;
+        --topbar-h: 58px;
+        --r: 12px;
+        --r2: 8px;
+        --shadow: 0 2px 12px rgba(0, 59, 112, 0.09);
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--abu);
+        color: var(--teks);
+        min-height: 100vh;
+      }
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        height: var(--topbar-h);
+        background: var(--biru);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        gap: 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+      .tbrand {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.2;
+      }
+      .tsep {
+        width: 1px;
+        height: 24px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 0 4px;
+      }
+      .app-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .app-logo {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--biru2), var(--biru3));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 17px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+      .app-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+      }
+      .app-name b {
+        font-weight: 800;
+        color: #fff;
+      }
+      .tright {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tadmin-av {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.2s;
+      }
+      .tadmin-av:hover {
+        background: rgba(255, 255, 255, 0.32);
+      }
+      .admin-menu {
+        position: relative;
+      }
+      .admin-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        min-width: 180px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+        z-index: 300;
+      }
+      .admin-dropdown.open {
+        display: block;
+      }
+      .admin-dropdown-info {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .admin-dropdown-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--teks);
+      }
+      .admin-dropdown-user {
+        font-size: 11px;
+        color: var(--teks3);
+        margin-top: 2px;
+      }
+      .admin-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--merah);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        text-align: left;
+        transition: background 0.15s;
+      }
+      .admin-dropdown-item:hover {
+        background: var(--merah-light);
+      }
+      .btn-back {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: var(--r2);
+        padding: 5px 12px;
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        cursor: pointer;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .btn-back:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .layout {
+        display: flex;
+        padding-top: var(--topbar-h);
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        position: fixed;
+        top: var(--topbar-h);
+        left: 0;
+        bottom: 0;
+        background: var(--putih);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.25s ease;
+      }
+      .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        top: var(--topbar-h);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 90;
+      }
+      .btn-menu {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        border-radius: var(--r2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-menu:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+      .sidebar-sec {
+        padding: 16px 12px 6px;
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--teks3);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 14px;
+        margin: 1px 8px;
+        border-radius: var(--r2);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--teks2);
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        background: none;
+        width: calc(100% - 16px);
+        text-align: left;
+        font-family: inherit;
+      }
+      .nav-item i {
+        font-size: 17px;
+        color: var(--teks3);
+        flex-shrink: 0;
+      }
+      .nav-item:hover,
+      .nav-item.active {
+        background: var(--biru-light);
+        color: var(--biru2);
+      }
+      .nav-item:hover i,
+      .nav-item.active i {
+        color: var(--biru2);
+      }
+      .nav-badge {
+        margin-left: auto;
+        background: var(--merah);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 7px;
+        border-radius: 100px;
+      }
+      .sidebar-foot {
+        margin-top: auto;
+        padding: 14px;
+        border-top: 1px solid var(--border);
+      }
+      .sidebar-av {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--biru), var(--biru3));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .main {
+        margin-left: var(--sidebar-w);
+        flex: 1;
+        padding: 24px;
+        min-width: 0;
+      }
+      .page-hdr {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .page-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--teks);
+      }
+      .page-sub {
+        font-size: 12px;
+        color: var(--teks2);
+        margin-top: 2px;
+      }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .stat-card {
+        background: var(--putih);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 16px 18px;
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .stat-icon i {
+        font-size: 20px;
+      }
+      .si-blue {
+        background: var(--biru-light);
+      }
+      .si-blue i {
+        color: var(--biru2);
+      }
+      .si-green {
+        background: var(--hijau-light);
+      }
+      .si-green i {
+        color: var(--hijau);
+      }
+      .si-red {
+        background: var(--merah-light);
+      }
+      .si-red i {
+        color: var(--merah);
+      }
+      .si-gold {
+        background: var(--emas-light);
+      }
+      .si-gold i {
+        color: var(--emas);
+      }
+      .stat-num {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--teks);
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 11px;
+        color: var(--teks2);
+        margin-top: 3px;
+      }
+      .card {
+        background: var(--putih);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .card-hd {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: #fafbfd;
+        flex-wrap: wrap;
+      }
+      .card-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--teks);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .card-title i {
+        font-size: 16px;
+        color: var(--biru2);
+      }
+      .card-body {
+        padding: 16px 18px;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12.5px;
+      }
+      thead th {
+        background: var(--abu);
+        padding: 9px 12px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--teks2);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .th-sort {
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.15s;
+      }
+      .th-sort:hover {
+        color: var(--biru2);
+      }
+      .sort-ic {
+        font-size: 12px;
+        margin-left: 4px;
+        opacity: 0.35;
+        vertical-align: -1px;
+      }
+      .th-sort.active {
+        color: var(--biru2);
+      }
+      .th-sort.active .sort-ic {
+        opacity: 1;
+      }
+      tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background 0.15s;
+      }
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: #f7f9fc;
+      }
+      tbody td {
+        padding: 10px 12px;
+        vertical-align: middle;
+      }
+      .td-nomor {
+        font-family: monospace;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--biru2);
+      }
+      .td-nama {
+        font-weight: 600;
+        color: var(--teks);
+      }
+      .td-sub {
+        font-size: 11px;
+        color: var(--teks2);
+        margin-top: 1px;
+      }
+      .empty-row {
+        text-align: center;
+        padding: 32px !important;
+        color: var(--teks3);
+        font-size: 13px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 100px;
+      }
+      .badge-baru {
+        background: #e8f2fa;
+        color: var(--biru2);
+      }
+      .badge-diproses {
+        background: var(--emas-light);
+        color: var(--emas);
+      }
+      .badge-selesai {
+        background: var(--hijau-light);
+        color: var(--hijau);
+      }
+      .badge-ditolak {
+        background: var(--merah-light);
+        color: var(--merah);
+      }
+      .badge-aktif {
+        background: var(--hijau-light);
+        color: var(--hijau);
+      }
+      .badge-nonaktif {
+        background: var(--merah-light);
+        color: var(--merah);
+      }
+      .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .fi {
+        padding: 8px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 12.5px;
+        color: var(--teks);
+        background: var(--putih);
+        outline: none;
+        transition: all 0.2s;
+      }
+      .fi:focus {
+        border-color: var(--biru2);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.08);
+      }
+      .fi::placeholder {
+        color: var(--teks3);
+      }
+      .fi-search {
+        min-width: 220px;
+        padding-left: 32px;
+      }
+      .search-wrap {
+        position: relative;
+      }
+      .search-ico {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 15px;
+        color: var(--teks3);
+        pointer-events: none;
+      }
+      .fi-sel {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23566275' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 9px) center;
+        padding-right: 28px;
+        cursor: pointer;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 12.5px;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--biru), var(--biru2));
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 59, 112, 0.2);
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(0, 59, 112, 0.28);
+      }
+      .btn-danger {
+        background: linear-gradient(135deg, #9b1c1c, var(--merah));
+        color: #fff;
+      }
+      .btn-danger:hover {
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: none;
+        border: 1.5px solid var(--border);
+        color: var(--teks2);
+      }
+      .btn-ghost:hover {
+        border-color: var(--biru2);
+        color: var(--biru2);
+        background: var(--biru-light);
+      }
+      .btn-icon {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        justify-content: center;
+        border-radius: var(--r2);
+      }
+      .btn-edit {
+        background: var(--biru-light);
+        color: var(--biru2);
+        border: none;
+      }
+      .btn-edit:hover {
+        background: var(--biru2);
+        color: #fff;
+      }
+      .btn-del {
+        background: var(--merah-light);
+        color: var(--merah);
+        border: none;
+      }
+      .btn-del:hover {
+        background: var(--merah);
+        color: #fff;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 14px;
+        font-size: 12px;
+        color: var(--teks2);
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .page-btns {
+        display: flex;
+        gap: 4px;
+      }
+      .page-btn {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--putih);
+        color: var(--teks2);
+        transition: all 0.15s;
+      }
+      .page-btn:hover,
+      .page-btn.active {
+        background: var(--biru2);
+        border-color: var(--biru2);
+        color: #fff;
+      }
+      .page-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .modal-bg {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 500;
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(3px);
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      .modal-bg.open {
+        display: flex;
+      }
+      .modal-box {
+        background: var(--putih);
+        border-radius: 16px;
+        width: 100%;
+        max-width: 520px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        animation: mIn 0.25s ease;
+      }
+      .modal-wide {
+        max-width: 680px;
+      }
+      @keyframes mIn {
+        from {
+          opacity: 0;
+          transform: scale(0.94) translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .modal-hd {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        background: var(--putih);
+        z-index: 1;
+      }
+      .modal-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--teks);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .modal-title i {
+        font-size: 18px;
+        color: var(--biru2);
+      }
+      .modal-close {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: none;
+        background: var(--abu);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: var(--teks2);
+        transition: all 0.2s;
+      }
+      .modal-close:hover {
+        background: var(--merah-light);
+        color: var(--merah);
+      }
+      .modal-body {
+        padding: 20px;
+      }
+      .modal-foot {
+        padding: 14px 20px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        background: #fafbfd;
+      }
+      .fgrp {
+        margin-bottom: 14px;
+      }
+      .frow2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .fl {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--teks);
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .req {
+        color: var(--merah);
+      }
+      .form-fi {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--r2);
+        font-family: inherit;
+        font-size: 13px;
+        color: var(--teks);
+        background: var(--putih);
+        outline: none;
+        transition: all 0.2s;
+      }
+      .form-fi:focus {
+        border-color: var(--biru2);
+        box-shadow: 0 0 0 3px rgba(0, 86, 166, 0.08);
+      }
+      .form-fi::placeholder {
+        color: var(--teks3);
+        font-size: 12px;
+      }
+      input.form-fi:read-only {
+        background: var(--abu);
+        color: var(--teks2);
+        cursor: not-allowed;
+      }
+      .form-ta {
+        min-height: 80px;
+        resize: vertical;
+        line-height: 1.55;
+      }
+      .form-sel {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23566275' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 10px) center;
+        padding-right: 28px;
+        cursor: pointer;
+      }
+      .confirm-box {
+        background: var(--merah-light);
+        border: 1px solid #f5c6c2;
+        border-radius: var(--r2);
+        padding: 14px 16px;
+        margin-bottom: 16px;
+        font-size: 12.5px;
+        color: var(--teks);
+        line-height: 1.6;
+      }
+      .silastik-box {
+        background: var(--biru-light);
+        border: 1px solid var(--biru-mid);
+        border-radius: var(--r2);
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+      .silastik-box .fsec-title {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--biru2);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .silastik-box .fgrp:last-child {
+        margin-bottom: 0;
+      }
+      .dlbl {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--teks3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+      }
+      .dval {
+        font-size: 13px;
+        color: var(--teks);
+        line-height: 1.6;
+        margin-bottom: 14px;
+      }
+      .dgrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .toast-wrap {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .toast {
+        background: var(--teks);
+        color: #fff;
+        padding: 12px 16px;
+        border-radius: var(--r2);
+        font-size: 12.5px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        animation: tIn 0.25s ease;
+      }
+      .t-ok {
+        background: var(--hijau);
+      }
+      .t-err {
+        background: var(--merah);
+      }
+      .t-warn {
+        background: var(--emas);
+      }
+      @keyframes tIn {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          var(--biru) 0%,
+          var(--biru2) 55%,
+          var(--biru3) 100%
+        );
+        padding: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      .login-page::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .login-card {
+        background: var(--putih);
+        border-radius: 20px;
+        padding: 36px 32px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 1;
+      }
+      .pw-tog {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--teks3);
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+      .pw-tog:hover {
+        color: var(--biru2);
+      }
+      .view {
+        display: none;
+      }
+      .view.on {
+        display: block;
+        animation: vIn 0.2s ease;
+      }
+      @keyframes vIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .spin {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: rot 0.6s linear infinite;
+        display: none;
+      }
+      @keyframes rot {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @media (max-width: 900px) {
+        .btn-menu {
+          display: flex;
+        }
+        .sidebar {
+          transform: translateX(-100%);
+          box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .sidebar-backdrop.open {
+          display: block;
+        }
+        .main {
+          margin-left: 0;
+        }
+        .stat-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .stat-grid,
+        .frow2,
+        .dgrid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="pg-login" class="login-page">
+      <div class="login-card">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+          "
+        >
+          <div
+            style="
+              width: 48px;
+              height: 48px;
+              border-radius: 12px;
+              background: linear-gradient(135deg, var(--biru2), var(--biru3));
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+              font-size: 24px;
+            "
+          >
+            <i class="ti ti-ticket"></i>
+          </div>
+          <div>
+            <div style="font-size: 16px; font-weight: 800; color: var(--biru)">
+              Portal Admin
+            </div>
+            <div style="font-size: 11px; color: var(--teks2)">
+              Tiket PST BPS Kalimantan Timur
+            </div>
+          </div>
+        </div>
+        <div class="fgrp">
+          <div class="fl">Username</div>
+          <input
+            type="text"
+            class="form-fi"
+            id="l-user"
+            placeholder="Masukkan username"
+            onkeydown="if (event.key === 'Enter') doLogin();"
+          />
+        </div>
+        <div class="fgrp">
+          <div class="fl">Password</div>
+          <div style="position: relative">
+            <input
+              type="password"
+              class="form-fi"
+              id="l-pass"
+              placeholder="Masukkan password"
+              onkeydown="if (event.key === 'Enter') doLogin();"
+            />
+            <button class="pw-tog" onclick="togglePw()">
+              <i class="ti ti-eye" id="pw-ic"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          id="l-err"
+          style="
+            display: none;
+            font-size: 11px;
+            color: var(--merah);
+            margin-bottom: 12px;
+            align-items: center;
+            gap: 4px;
+          "
+        >
+          <i class="ti ti-alert-circle" style="font-size: 13px"></i
+          ><span>Username atau password salah</span>
+        </div>
+        <button
+          class="btn btn-primary"
+          style="width: 100%; justify-content: center; padding: 11px"
+          id="btn-login"
+          onclick="doLogin()"
+        >
+          <span id="bl-txt">Masuk</span
+          ><i class="ti ti-arrow-right" id="bl-ic"></i>
+          <div class="spin" id="bl-sp"></div>
+        </button>
+        <div style="text-align: center; margin-top: 16px">
+          <a
+            href="index.html"
+            style="
+              font-size: 12px;
+              color: var(--teks3);
+              text-decoration: none;
+              display: inline-flex;
+              align-items: center;
+              gap: 4px;
+            "
+          >
+            <i class="ti ti-arrow-left" style="font-size: 13px"></i>Kembali ke
+            halaman publik
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="pg-admin" style="display: none">
+      <div class="topbar">
+        <button class="btn-menu" id="btn-menu" onclick="toggleSidebar()">
+          <i class="ti ti-menu-2"></i>
+        </button>
+        <div class="app-brand">
+          <div class="app-logo"><i class="ti ti-ticket"></i></div>
+          <span class="app-name">Tiket<b>PST</b></span>
+        </div>
+        <div class="tsep"></div>
+        <div class="tbrand">Portal Admin</div>
+        <div class="tright">
+          <a href="index.html" class="btn-back"
+            ><i class="ti ti-world" style="font-size: 13px"></i>Portal Publik</a
+          >
+          <div class="admin-menu">
+            <button class="tadmin-av" id="nav-av" onclick="toggleAdminMenu()">
+              A
+            </button>
+            <div class="admin-dropdown" id="admin-dropdown">
+              <div class="admin-dropdown-info">
+                <div class="admin-dropdown-name" id="dd-name">Admin</div>
+                <div class="admin-dropdown-user" id="dd-user">@admin</div>
+              </div>
+              <button class="admin-dropdown-item" onclick="doLogout()">
+                <i class="ti ti-logout"></i>Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layout">
+        <div
+          class="sidebar-backdrop"
+          id="sidebar-backdrop"
+          onclick="closeSidebar()"
+        ></div>
+        <div class="sidebar" id="sidebar">
+          <div class="sidebar-sec">Menu Utama</div>
+          <button
+            class="nav-item active"
+            id="nav-dashboard"
+            onclick="showPage('dashboard')"
+          >
+            <i class="ti ti-dashboard"></i>Dashboard
+          </button>
+          <button class="nav-item" id="nav-tiket" onclick="showPage('tiket')">
+            <i class="ti ti-ticket"></i>Tiket Masuk<span
+              class="nav-badge"
+              id="badge-baru"
+              >0</span
+            >
+          </button>
+          <div class="sidebar-sec">Master Data</div>
+          <button
+            class="nav-item"
+            id="nav-petugas"
+            onclick="showPage('petugas')"
+          >
+            <i class="ti ti-users"></i>Petugas PST
+          </button>
+          <div class="sidebar-foot">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <div class="sidebar-av" id="sb-av">A</div>
+              <div>
+                <div
+                  style="font-size: 12px; font-weight: 700; color: var(--teks)"
+                  id="sb-name"
+                >
+                  Administrator
+                </div>
+                <div style="font-size: 10px; color: var(--teks3)">
+                  Admin BPS Kaltim
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="view on" id="view-dashboard">
+            <div class="page-hdr">
+              <div>
+                <div class="page-title">Dashboard</div>
+                <div class="page-sub">
+                  Ringkasan aktivitas Tiket PST BPS Kaltim
+                </div>
+              </div>
+              <button class="btn btn-ghost" onclick="loadDashboard()">
+                <i class="ti ti-refresh"></i>Refresh
+              </button>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div class="stat-icon si-blue">
+                  <i class="ti ti-ticket"></i>
+                </div>
+                <div>
+                  <div class="stat-num" id="s-total">-</div>
+                  <div class="stat-lbl">Total Tiket</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon si-gold"><i class="ti ti-clock"></i></div>
+                <div>
+                  <div class="stat-num" id="s-baru">-</div>
+                  <div class="stat-lbl">Tiket Baru</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon si-red"><i class="ti ti-loader"></i></div>
+                <div>
+                  <div class="stat-num" id="s-proses">-</div>
+                  <div class="stat-lbl">Sedang Diproses</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon si-green">
+                  <i class="ti ti-circle-check"></i>
+                </div>
+                <div>
+                  <div class="stat-num" id="s-selesai">-</div>
+                  <div class="stat-lbl">Selesai</div>
+                </div>
+              </div>
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+            >
+              <div class="card">
+                <div class="card-hd">
+                  <div class="card-title">
+                    <i class="ti ti-chart-bar"></i>Tiket per Kategori
+                  </div>
+                </div>
+                <div class="card-body" id="kat-chart">Memuat...</div>
+              </div>
+              <div class="card">
+                <div class="card-hd">
+                  <div class="card-title">
+                    <i class="ti ti-clock-hour-4"></i>Tiket Terbaru
+                  </div>
+                  <button
+                    class="btn btn-ghost"
+                    style="font-size: 11px; padding: 5px 10px"
+                    onclick="showPage('tiket')"
+                  >
+                    Lihat Semua
+                  </button>
+                </div>
+                <div class="card-body" id="recent-list">Memuat...</div>
+              </div>
+            </div>
+          </div>
+          <div class="view" id="view-tiket">
+            <div class="page-hdr">
+              <div>
+                <div class="page-title">Manajemen Tiket</div>
+                <div class="page-sub">
+                  Kelola semua tiket permohonan layanan PST
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="openTiketModal(false)">
+                <i class="ti ti-plus"></i>Buat Tiket
+              </button>
+            </div>
+            <div class="filter-bar">
+              <div class="search-wrap">
+                <i class="ti ti-search search-ico"></i
+                ><input
+                  type="text"
+                  class="fi fi-search"
+                  id="t-search"
+                  placeholder="Cari nama, nomor, subjek..."
+                  oninput="debounce()"
+                />
+              </div>
+              <select class="fi fi-sel" id="t-status" onchange="loadTiket(1)">
+                <option value="">Semua Status</option>
+                <option value="baru">Baru</option>
+                <option value="diproses">Diproses</option>
+                <option value="selesai">Selesai</option>
+                <option value="ditolak">Ditolak</option>
+              </select>
+              <select class="fi fi-sel" id="t-petugas" onchange="loadTiket(1)">
+                <option value="">Semua Petugas</option>
+                <option value="unassigned">Belum Ditugaskan</option>
+              </select>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding: 0">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th
+                          class="th-sort"
+                          id="th-nomor_tiket"
+                          onclick="sortTiket('nomor_tiket')"
+                        >
+                          Nomor Tiket<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-nama_pemohon"
+                          onclick="sortTiket('nama_pemohon')"
+                        >
+                          Pemohon<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-kategori"
+                          onclick="sortTiket('kategori')"
+                        >
+                          Kategori<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-subjek"
+                          onclick="sortTiket('subjek')"
+                        >
+                          Subjek<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-status"
+                          onclick="sortTiket('status')"
+                        >
+                          Status<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-petugas_nama"
+                          onclick="sortTiket('petugas_nama')"
+                        >
+                          Petugas<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-tanggal_pelayanan"
+                          onclick="sortTiket('tanggal_pelayanan')"
+                        >
+                          Tgl Pelayanan<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-created_at"
+                          onclick="sortTiket('created_at')"
+                        >
+                          Dibuat<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tiket-tbody">
+                      <tr>
+                        <td colspan="9" class="empty-row">Memuat...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div
+                  class="pagination"
+                  id="tiket-paging"
+                  style="padding: 12px 16px"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="view" id="view-petugas">
+            <div class="page-hdr">
+              <div>
+                <div class="page-title">Petugas PST</div>
+                <div class="page-sub">
+                  Daftar petugas Pelayanan Statistik Terpadu BPS Kaltim
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="openPetugasModal(false)">
+                <i class="ti ti-plus"></i>Tambah Petugas
+              </button>
+            </div>
+            <div class="card">
+              <div class="card-body" style="padding: 0">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th
+                          class="th-sort"
+                          id="th-p-nama_lengkap"
+                          onclick="sortPetugas('nama_lengkap')"
+                        >
+                          Nama Lengkap<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-p-nama_alias"
+                          onclick="sortPetugas('nama_alias')"
+                        >
+                          Nama Alias<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-p-nip"
+                          onclick="sortPetugas('nip')"
+                        >
+                          NIP<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-p-aktif"
+                          onclick="sortPetugas('aktif')"
+                        >
+                          Status<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th
+                          class="th-sort"
+                          id="th-p-created_at"
+                          onclick="sortPetugas('created_at')"
+                        >
+                          Terdaftar<i class="ti ti-arrows-sort sort-ic"></i>
+                        </th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="petugas-tbody">
+                      <tr>
+                        <td colspan="7" class="empty-row">Memuat...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="m-tiket">
+      <div class="modal-box modal-wide">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-ticket"></i><span id="mt-head">Buat Tiket</span>
+          </div>
+          <button class="modal-close" onclick="closeModal('m-tiket')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="mt-nomor" />
+          <div class="frow2">
+            <div class="fgrp">
+              <div class="fl">Nama Pemohon <span class="req">*</span></div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mt-nama"
+                placeholder="Nama lengkap pemohon"
+                readonly
+              />
+            </div>
+            <div class="fgrp">
+              <div class="fl">No. HP</div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mt-hp"
+                placeholder="08xxxxxxxxxx"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="fgrp">
+            <div class="fl">Kategori <span class="req">*</span></div>
+            <select class="form-fi form-sel" id="mt-kat">
+              <option value="">-- Pilih --</option>
+              <option>Permintaan Data</option>
+              <option>Konsultasi</option>
+              <option>Pengaduan</option>
+              <option>Lainnya</option>
+            </select>
+          </div>
+          <div class="fgrp">
+            <div class="fl">Subjek <span class="req">*</span></div>
+            <input
+              type="text"
+              class="form-fi"
+              id="mt-subjek"
+              placeholder="Judul singkat permohonan"
+            />
+          </div>
+          <div class="fgrp">
+            <div class="fl">Uraian <span class="req">*</span></div>
+            <textarea
+              class="form-fi form-ta"
+              id="mt-uraian"
+              placeholder="Detail permohonan..."
+            ></textarea>
+          </div>
+          <div class="frow2">
+            <div class="fgrp">
+              <div class="fl">Petugas</div>
+              <select class="form-fi form-sel" id="mt-petugas">
+                <option value="">-- Belum Ditugaskan --</option>
+              </select>
+            </div>
+            <div class="fgrp">
+              <div class="fl">Tanggal Pelayanan</div>
+              <input type="date" class="form-fi" id="mt-tgl" />
+            </div>
+          </div>
+          <div class="fgrp">
+            <div class="fl">Status</div>
+            <select
+              class="form-fi form-sel"
+              id="mt-status"
+              onchange="toggleSilastikFields()"
+            >
+              <option value="baru">Baru</option>
+              <option value="diproses">Diproses</option>
+              <option value="selesai">Selesai</option>
+              <option value="ditolak">Ditolak</option>
+            </select>
+          </div>
+          <div id="mt-silastik-wrap" style="display: none">
+            <div class="silastik-box">
+              <div class="fsec-title">
+                <i class="ti ti-clipboard-text"></i>Silastik
+              </div>
+              <div
+                style="
+                  font-size: 11.5px;
+                  color: var(--teks2);
+                  line-height: 1.5;
+                  margin-bottom: 12px;
+                "
+              >
+                Sebelum mengakhiri tiket, isikan dulu ringkasan pertanyaan dan
+                jawaban pelayanan PST <br />sebagai input di Silastik.
+              </div>
+              <div class="fgrp">
+                <div class="fl">
+                  Pertanyaan Silastik <span class="req">*</span>
+                </div>
+                <textarea
+                  class="form-fi form-ta"
+                  id="mt-silastik-q"
+                  placeholder="Pertanyaan untuk survei Silastik"
+                  style="min-height: 60px"
+                ></textarea>
+              </div>
+              <div class="fgrp">
+                <div class="fl">
+                  Jawaban Silastik <span class="req">*</span>
+                </div>
+                <textarea
+                  class="form-fi form-ta"
+                  id="mt-silastik-a"
+                  placeholder="Jawaban pemohon"
+                  style="min-height: 60px"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="fgrp">
+            <div class="fl">Catatan</div>
+            <textarea
+              class="form-fi form-ta"
+              id="mt-catatan"
+              placeholder="Catatan internal..."
+              style="min-height: 60px"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-tiket')">
+            Batal</button
+          ><button class="btn btn-primary" id="btn-st" onclick="saveTiket()">
+            <span id="bst-txt">Simpan</span>
+            <div class="spin" id="bst-sp"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="m-detail">
+      <div class="modal-box modal-wide">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-file-description"></i>Detail Tiket
+          </div>
+          <button class="modal-close" onclick="closeModal('m-detail')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="detail-body">Memuat...</div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-detail')">
+            Tutup</button
+          ><button class="btn btn-primary" onclick="editFromDetail()">
+            <i class="ti ti-edit"></i>Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="m-del-tiket">
+      <div class="modal-box" style="max-width: 420px">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-trash" style="color: var(--merah)"></i>Hapus Tiket
+          </div>
+          <button class="modal-close" onclick="closeModal('m-del-tiket')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="confirm-box">
+            <strong>Yakin hapus tiket ini?</strong><br /><span
+              id="del-tiket-nom"
+              style="font-family: monospace; color: var(--biru2)"
+            ></span
+            ><br />Tindakan ini tidak dapat dibatalkan.
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-del-tiket')">
+            Batal</button
+          ><button
+            class="btn btn-danger"
+            id="btn-del-tiket"
+            onclick="doDelTiket()"
+          >
+            <i class="ti ti-trash"></i>Ya, Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="m-petugas">
+      <div class="modal-box" style="max-width: 440px">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-user-plus"></i
+            ><span id="mp-head">Tambah Petugas</span>
+          </div>
+          <button class="modal-close" onclick="closeModal('m-petugas')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="mp-id" />
+          <div class="fgrp">
+            <div class="fl">Nama Lengkap <span class="req">*</span></div>
+            <input
+              type="text"
+              class="form-fi"
+              id="mp-nama"
+              placeholder="Nama lengkap petugas"
+            />
+          </div>
+          <div class="frow2">
+            <div class="fgrp">
+              <div class="fl">Nama Alias</div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mp-alias"
+                placeholder="Contoh: Budi S."
+              />
+            </div>
+            <div class="fgrp">
+              <div class="fl">NIP</div>
+              <input
+                type="text"
+                class="form-fi"
+                id="mp-nip"
+                placeholder="198xxxxx"
+              />
+            </div>
+          </div>
+          <div class="fgrp">
+            <div class="fl">Status</div>
+            <select class="form-fi form-sel" id="mp-aktif">
+              <option value="1">Aktif</option>
+              <option value="0">Tidak Aktif</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-petugas')">
+            Batal</button
+          ><button class="btn btn-primary" id="btn-sp" onclick="savePetugas()">
+            <span id="bsp-txt">Simpan</span>
+            <div class="spin" id="bsp-sp"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-bg" id="m-del-petugas">
+      <div class="modal-box" style="max-width: 420px">
+        <div class="modal-hd">
+          <div class="modal-title">
+            <i class="ti ti-trash" style="color: var(--merah)"></i>Hapus Petugas
+          </div>
+          <button class="modal-close" onclick="closeModal('m-del-petugas')">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="confirm-box">
+            <strong>Hapus petugas ini?</strong><br /><span
+              id="del-pet-nama"
+            ></span
+            ><br />Tiket yang ditugaskan ke petugas ini akan menjadi tidak
+            ditugaskan.
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-del-petugas')">
+            Batal</button
+          ><button
+            class="btn btn-danger"
+            id="btn-del-pet"
+            onclick="doDelPetugas()"
+          >
+            <i class="ti ti-trash"></i>Ya, Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-wrap" id="toasts"></div>
+    <script>
+      var API = "";
+      var token = "";
+      var adminInfo = null;
+      var petugasList = [];
+      var detailNomor = "";
+      var delTiketNomor = "";
+      var delPetugasId = null;
+      var tPage = 1;
+      var tSort = "created_at";
+      var tOrder = "desc";
+      var pSort = "nama_lengkap";
+      var pOrder = "asc";
+      var dtimer = null;
+
+      window.onload = function () {
+        token = localStorage.getItem("admin_token") || "";
+        if (token) {
+          var s = localStorage.getItem("admin_info");
+          if (s) {
+            try {
+              adminInfo = JSON.parse(s);
+            } catch (e) {}
+          }
+          enterAdmin();
+        } else {
+          document.getElementById("pg-login").style.display = "flex";
+        }
+      };
+
+      function togglePw() {
+        var inp = document.getElementById("l-pass");
+        var ic = document.getElementById("pw-ic");
+        if (inp.type === "password") {
+          inp.type = "text";
+          ic.className = "ti ti-eye-off";
+        } else {
+          inp.type = "password";
+          ic.className = "ti ti-eye";
+        }
+      }
+
+      function doLogin() {
+        var user = document.getElementById("l-user").value.trim();
+        var pass = document.getElementById("l-pass").value;
+        var err = document.getElementById("l-err");
+        err.style.display = "none";
+        if (!user || !pass) {
+          err.querySelector("span").textContent =
+            "Username dan password wajib diisi";
+          err.style.display = "flex";
+          return;
+        }
+        setBtn(
+          "btn-login",
+          "bl-txt",
+          "bl-ic",
+          "bl-sp",
+          "Memverifikasi...",
+          true,
+        );
+        apiFetch(
+          "/api/login",
+          "POST",
+          { username: user, password: pass },
+          false,
+        )
+          .then(function (r) {
+            if (r.success) {
+              token = r.data.token;
+              adminInfo = r.data.admin;
+              localStorage.setItem("admin_token", token);
+              localStorage.setItem("admin_info", JSON.stringify(adminInfo));
+              enterAdmin();
+            } else {
+              err.querySelector("span").textContent =
+                r.message || "Login gagal";
+              err.style.display = "flex";
+              setBtn("btn-login", "bl-txt", "bl-ic", "bl-sp", "Masuk", false);
+            }
+          })
+          .catch(function () {
+            err.querySelector("span").textContent = "Gagal terhubung ke server";
+            err.style.display = "flex";
+            setBtn("btn-login", "bl-txt", "bl-ic", "bl-sp", "Masuk", false);
+          });
+      }
+
+      function doLogout() {
+        token = "";
+        adminInfo = null;
+        localStorage.removeItem("admin_token");
+        localStorage.removeItem("admin_info");
+        location.href = "index.html";
+      }
+
+      function toggleAdminMenu() {
+        document.getElementById("admin-dropdown").classList.toggle("open");
+      }
+
+      document.addEventListener("click", function (e) {
+        var menu = document.getElementById("admin-dropdown");
+        var av = document.getElementById("nav-av");
+        if (
+          menu &&
+          menu.classList.contains("open") &&
+          !menu.contains(e.target) &&
+          e.target !== av
+        ) {
+          menu.classList.remove("open");
+        }
+      });
+
+      function enterAdmin() {
+        document.getElementById("pg-login").style.display = "none";
+        document.getElementById("pg-admin").style.display = "block";
+        if (adminInfo) {
+          var ini = (adminInfo.nama_lengkap || adminInfo.username || "A")
+            .split(" ")
+            .map(function (w) {
+              return w[0];
+            })
+            .slice(0, 2)
+            .join("")
+            .toUpperCase();
+          document.getElementById("nav-av").textContent = ini;
+          document.getElementById("dd-name").textContent =
+            adminInfo.nama_lengkap || adminInfo.username || "Administrator";
+          document.getElementById("dd-user").textContent =
+            "@" + (adminInfo.username || "admin");
+          document.getElementById("sb-av").textContent = ini;
+          document.getElementById("sb-name").textContent =
+            adminInfo.nama_lengkap || adminInfo.username || "Administrator";
+        }
+        loadPetugasDrop();
+        loadDashboard();
+        updateSortIcons();
+        updatePetugasSortIcons();
+        var savedPage = localStorage.getItem("admin_page");
+        if (["dashboard", "tiket", "petugas"].indexOf(savedPage) === -1) {
+          savedPage = "dashboard";
+        }
+        showPage(savedPage);
+      }
+
+      /* API */
+      function apiFetch(path, method, body, auth) {
+        if (auth === undefined) auth = true;
+        var opts = {
+          method: method || "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        if (auth && token) opts.headers["Authorization"] = "Bearer " + token;
+        if (body && method !== "GET") opts.body = JSON.stringify(body);
+        return fetch(API + path, opts).then(function (r) {
+          return r.json();
+        });
+      }
+
+      function setBtn(btnId, txtId, icId, spId, txt, loading) {
+        var btn = document.getElementById(btnId);
+        if (btn) btn.disabled = loading;
+        if (txtId) document.getElementById(txtId).textContent = txt;
+        if (icId && document.getElementById(icId))
+          document.getElementById(icId).style.display = loading ? "none" : "";
+        if (spId && document.getElementById(spId))
+          document.getElementById(spId).style.display = loading
+            ? "block"
+            : "none";
+      }
+
+      /* SIDEBAR (mobile) */
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("open");
+        document.getElementById("sidebar-backdrop").classList.toggle("open");
+      }
+      function closeSidebar() {
+        document.getElementById("sidebar").classList.remove("open");
+        document.getElementById("sidebar-backdrop").classList.remove("open");
+      }
+
+      /* NAVIGATION */
+      function showPage(page) {
+        closeSidebar();
+        localStorage.setItem("admin_page", page);
+        ["dashboard", "tiket", "petugas"].forEach(function (p) {
+          var v = document.getElementById("view-" + p);
+          var n = document.getElementById("nav-" + p);
+          if (v) {
+            v.classList.remove("on");
+            v.style.display = "none";
+          }
+          if (n) n.classList.remove("active");
+        });
+        var v = document.getElementById("view-" + page);
+        var n = document.getElementById("nav-" + page);
+        if (v) {
+          v.classList.add("on");
+          v.style.display = "block";
+        }
+        if (n) n.classList.add("active");
+        if (page === "tiket") loadTiket(1);
+        if (page === "petugas") loadPetugas();
+      }
+
+      /* DASHBOARD */
+      function loadDashboard() {
+        apiFetch("/api/admin/stats", "GET", null)
+          .then(function (r) {
+            if (!r.success) return;
+            var d = r.data;
+            document.getElementById("s-total").textContent = d.total_tiket || 0;
+            document.getElementById("s-baru").textContent = d.tiket_baru || 0;
+            document.getElementById("s-proses").textContent =
+              d.tiket_diproses || 0;
+            document.getElementById("s-selesai").textContent =
+              d.tiket_selesai || 0;
+            document.getElementById("badge-baru").textContent =
+              d.tiket_baru || 0;
+            var cats = d.per_kategori || [];
+            var max = 0;
+            cats.forEach(function (c) {
+              if (c.jumlah > max) max = c.jumlah;
+            });
+            var html = "";
+            cats.forEach(function (c) {
+              var pct = max > 0 ? Math.round((c.jumlah / max) * 100) : 0;
+              html +=
+                '<div style="margin-bottom:12px">' +
+                '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">' +
+                '<span style="font-weight:600">' +
+                safe(c.kategori) +
+                "</span>" +
+                '<span style="color:var(--teks2)">' +
+                c.jumlah +
+                "</span></div>" +
+                '<div style="background:var(--border);border-radius:4px;height:8px">' +
+                '<div style="background:var(--biru2);width:' +
+                pct +
+                '%;height:100%;border-radius:4px"></div></div></div>';
+            });
+            document.getElementById("kat-chart").innerHTML =
+              html ||
+              '<div style="text-align:center;color:var(--teks3);padding:20px;font-size:13px">Belum ada data</div>';
+          })
+          .catch(function () {});
+
+        apiFetch("/api/admin/tiket?limit=5", "GET", null)
+          .then(function (r) {
+            if (!r.success) return;
+            var list = r.data.tikets || [];
+            if (!list.length) {
+              document.getElementById("recent-list").innerHTML =
+                '<div style="text-align:center;color:var(--teks3);padding:20px;font-size:13px">Belum ada tiket</div>';
+              return;
+            }
+            var html = "";
+            list.forEach(function (t) {
+              var nom = t.nomor_tiket;
+              html +=
+                '<div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer" onclick="openDetail(\'' +
+                nom +
+                "')\">" +
+                '<div style="flex:1;min-width:0">' +
+                '<div style="font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
+                safe(t.nama_pemohon) +
+                "</div>" +
+                '<div style="font-size:11px;color:var(--teks2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
+                safe(t.subjek) +
+                "</div></div>" +
+                '<span class="badge badge-' +
+                t.status +
+                '">' +
+                t.status +
+                "</span></div>";
+            });
+            document.getElementById("recent-list").innerHTML = html;
+          })
+          .catch(function () {});
+      }
+
+      /* TIKET */
+      function debounce() {
+        clearTimeout(dtimer);
+        dtimer = setTimeout(function () {
+          loadTiket(1);
+        }, 400);
+      }
+
+      var TIKET_SORT_COLS = [
+        "nomor_tiket",
+        "nama_pemohon",
+        "kategori",
+        "subjek",
+        "status",
+        "petugas_nama",
+        "tanggal_pelayanan",
+        "created_at",
+      ];
+
+      function sortTiket(col) {
+        if (tSort === col) {
+          tOrder = tOrder === "asc" ? "desc" : "asc";
+        } else {
+          tSort = col;
+          tOrder = "asc";
+        }
+        updateSortIcons();
+        loadTiket(1);
+      }
+
+      function updateSortIcons() {
+        TIKET_SORT_COLS.forEach(function (c) {
+          var th = document.getElementById("th-" + c);
+          if (!th) return;
+          var ic = th.querySelector(".sort-ic");
+          if (c === tSort) {
+            th.classList.add("active");
+            ic.className =
+              "ti " +
+              (tOrder === "asc" ? "ti-sort-ascending" : "ti-sort-descending") +
+              " sort-ic";
+          } else {
+            th.classList.remove("active");
+            ic.className = "ti ti-arrows-sort sort-ic";
+          }
+        });
+      }
+
+      function loadTiket(page) {
+        if (page) tPage = page;
+        var q = document.getElementById("t-search").value.trim();
+        var st = document.getElementById("t-status").value;
+        var pt = document.getElementById("t-petugas").value;
+        var params = "?page=" + tPage + "&limit=20";
+        if (q) params += "&q=" + encodeURIComponent(q);
+        if (st) params += "&status=" + st;
+        if (pt) params += "&petugas_id=" + pt;
+        params += "&sort=" + tSort + "&order=" + tOrder;
+        document.getElementById("tiket-tbody").innerHTML =
+          '<tr><td colspan="9" class="empty-row">Memuat data...</td></tr>';
+        apiFetch("/api/admin/tiket" + params, "GET", null)
+          .then(function (r) {
+            if (!r.success) {
+              toast("Gagal memuat tiket", "t-err");
+              return;
+            }
+            renderTiket(r.data);
+          })
+          .catch(function () {
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      function renderTiket(data) {
+        var list = data.tikets || [];
+        if (!list.length) {
+          document.getElementById("tiket-tbody").innerHTML =
+            '<tr><td colspan="9" class="empty-row">Tidak ada tiket ditemukan</td></tr>';
+          document.getElementById("tiket-paging").innerHTML = "";
+          return;
+        }
+        var html = "";
+        list.forEach(function (t) {
+          var nom = t.nomor_tiket;
+          var tgl = t.tanggal_pelayanan
+            ? t.tanggal_pelayanan.substring(0, 10)
+            : "-";
+          var pet = t.petugas_nama
+            ? safe(t.petugas_nama)
+            : '<span style="color:var(--teks3);font-size:11px">-</span>';
+          html +=
+            "<tr>" +
+            '<td><span class="td-nomor" style="cursor:pointer" onclick="openDetail(\'' +
+            nom +
+            "')\">" +
+            nom +
+            "</span></td>" +
+            '<td><div class="td-nama">' +
+            safe(t.nama_pemohon) +
+            '</div><div class="td-sub">' +
+            (t.no_hp || "") +
+            "</div></td>" +
+            '<td style="font-size:12px">' +
+            t.kategori +
+            "</td>" +
+            '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">' +
+            safe(t.subjek) +
+            "</td>" +
+            '<td><span class="badge badge-' +
+            t.status +
+            '">' +
+            t.status +
+            "</span></td>" +
+            '<td style="font-size:12px">' +
+            pet +
+            "</td>" +
+            '<td style="font-size:12px">' +
+            tgl +
+            "</td>" +
+            '<td style="font-size:11px;color:var(--teks3)">' +
+            fmtDate(t.created_at) +
+            "</td>" +
+            '<td><div style="display:flex;gap:5px">' +
+            '<button class="btn btn-icon btn-edit" title="Edit" onclick="openEditTiket(\'' +
+            nom +
+            '\')"><i class="ti ti-edit" style="font-size:14px"></i></button>' +
+            '<button class="btn btn-icon" style="background:var(--biru-light);border:none" title="Detail" onclick="openDetail(\'' +
+            nom +
+            '\')"><i class="ti ti-eye" style="font-size:14px;color:var(--biru2)"></i></button>' +
+            '<button class="btn btn-icon btn-del" title="Hapus" onclick="confirmDelTiket(\'' +
+            nom +
+            '\')"><i class="ti ti-trash" style="font-size:14px"></i></button>' +
+            "</div></td></tr>";
+        });
+        document.getElementById("tiket-tbody").innerHTML = html;
+
+        var total = data.total || 0;
+        var totalPages = data.total_pages || 1;
+        var from = (tPage - 1) * 20 + 1;
+        var to = Math.min(tPage * 20, total);
+        var ph =
+          "<span>" +
+          from +
+          "-" +
+          to +
+          " dari " +
+          total +
+          ' tiket</span><div class="page-btns">';
+        ph +=
+          '<button class="page-btn" ' +
+          (tPage <= 1 ? "disabled" : "") +
+          ' onclick="loadTiket(' +
+          (tPage - 1) +
+          ')"><i class="ti ti-chevron-left" style="font-size:12px"></i></button>';
+        var s = Math.max(1, tPage - 2),
+          e = Math.min(totalPages, s + 4);
+        for (var i = s; i <= e; i++)
+          ph +=
+            '<button class="page-btn' +
+            (i === tPage ? " active" : "") +
+            '" onclick="loadTiket(' +
+            i +
+            ')">' +
+            i +
+            "</button>";
+        ph +=
+          '<button class="page-btn" ' +
+          (tPage >= totalPages ? "disabled" : "") +
+          ' onclick="loadTiket(' +
+          (tPage + 1) +
+          ')"><i class="ti ti-chevron-right" style="font-size:12px"></i></button></div>';
+        document.getElementById("tiket-paging").innerHTML = ph;
+      }
+
+      function openTiketModal(isEdit) {
+        document.getElementById("mt-head").textContent = isEdit
+          ? "Edit Tiket"
+          : "Buat Tiket";
+        if (!isEdit) {
+          window.location.replace("/");
+          // [
+          //   "mt-nomor",
+          //   "mt-nama",
+          //   "mt-hp",
+          //   "mt-subjek",
+          //   "mt-uraian",
+          //   "mt-catatan",
+          // ].forEach(function (id) {
+          //   document.getElementById(id).value = "";
+          // });
+          // document.getElementById("mt-kat").value = "";
+          // document.getElementById("mt-status").value = "baru";
+          // document.getElementById("mt-petugas").value = "";
+          // document.getElementById("mt-tgl").value = "";
+        }
+        openModal("m-tiket");
+      }
+
+      function toggleSilastikFields() {
+        var st = document.getElementById("mt-status").value;
+        var wrap = document.getElementById("mt-silastik-wrap");
+        wrap.style.display =
+          st === "selesai" || st === "ditolak" ? "block" : "none";
+      }
+
+      function openEditTiket(nomor) {
+        apiFetch("/api/admin/tiket/" + nomor, "GET", null).then(function (r) {
+          if (!r.success) {
+            toast("Gagal memuat tiket", "t-err");
+            return;
+          }
+          var t = r.data;
+          document.getElementById("mt-nomor").value = t.nomor_tiket;
+          document.getElementById("mt-nama").value = t.nama_pemohon || "";
+          document.getElementById("mt-hp").value = t.no_hp || "";
+          document.getElementById("mt-kat").value = t.kategori || "";
+          document.getElementById("mt-status").value = t.status || "baru";
+          document.getElementById("mt-subjek").value = t.subjek || "";
+          document.getElementById("mt-uraian").value = t.uraian || "";
+          document.getElementById("mt-petugas").value = t.petugas_id || "";
+          document.getElementById("mt-tgl").value = t.tanggal_pelayanan
+            ? t.tanggal_pelayanan.substring(0, 10)
+            : "";
+          document.getElementById("mt-catatan").value = t.catatan || "";
+          document.getElementById("mt-silastik-q").value =
+            t.silastik_pertanyaan || "";
+          document.getElementById("mt-silastik-a").value =
+            t.silastik_jawaban || "";
+          toggleSilastikFields();
+          openTiketModal(true);
+        });
+      }
+
+      function editFromDetail() {
+        closeModal("m-detail");
+        if (detailNomor) openEditTiket(detailNomor);
+      }
+
+      function saveTiket() {
+        var nomor = document.getElementById("mt-nomor").value;
+        var nama = document.getElementById("mt-nama").value.trim();
+        var hp = document.getElementById("mt-hp").value.trim();
+        var kat = document.getElementById("mt-kat").value;
+        var st = document.getElementById("mt-status").value;
+        var subj = document.getElementById("mt-subjek").value.trim();
+        var ur = document.getElementById("mt-uraian").value.trim();
+        var pet = document.getElementById("mt-petugas").value;
+        var tgl = document.getElementById("mt-tgl").value;
+        var cat = document.getElementById("mt-catatan").value.trim();
+        var silQ = document.getElementById("mt-silastik-q").value.trim();
+        var silA = document.getElementById("mt-silastik-a").value.trim();
+        if (!nama || !kat || !subj || !ur) {
+          toast("Lengkapi field wajib", "t-warn");
+          return;
+        }
+        if ((st === "selesai" || st === "ditolak") && (!silQ || !silA)) {
+          toast(
+            "Pertanyaan dan jawaban Silastik wajib diisi untuk mengakhiri tiket",
+            "t-warn",
+          );
+          return;
+        }
+        setBtn("btn-st", "bst-txt", null, "bst-sp", "Menyimpan...", true);
+        var payload, path, method;
+        if (nomor) {
+          payload = {
+            no_hp: hp,
+            nama_pemohon: nama,
+            kategori: kat,
+            subjek: subj,
+            uraian: ur,
+            status: st,
+            catatan: cat,
+            tanggal_pelayanan: tgl,
+            petugas_id: pet ? parseInt(pet) : null,
+            silastik_pertanyaan: silQ,
+            silastik_jawaban: silA,
+          };
+          path = "/api/admin/tiket/" + nomor;
+          method = "PUT";
+        } else {
+          payload = {
+            no_hp: hp,
+            nama_pemohon: nama,
+            kategori: kat,
+            subjek: subj,
+            uraian: ur,
+          };
+          path = "/api/admin/tiket";
+          method = "POST";
+        }
+        apiFetch(path, method, payload)
+          .then(function (r) {
+            setBtn("btn-st", "bst-txt", null, "bst-sp", "Simpan", false);
+            if (r.success) {
+              closeModal("m-tiket");
+              toast(nomor ? "Tiket diperbarui" : "Tiket dibuat", "t-ok");
+              loadTiket(tPage);
+              loadDashboard();
+            } else toast(r.message || "Gagal menyimpan", "t-err");
+          })
+          .catch(function () {
+            setBtn("btn-st", "bst-txt", null, "bst-sp", "Simpan", false);
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      function openDetail(nomor) {
+        detailNomor = nomor;
+        document.getElementById("detail-body").innerHTML =
+          '<div style="text-align:center;padding:32px;color:var(--teks3)">Memuat...</div>';
+        openModal("m-detail");
+        apiFetch("/api/admin/tiket/" + nomor, "GET", null).then(function (r) {
+          if (!r.success) {
+            document.getElementById("detail-body").innerHTML =
+              '<div style="color:var(--merah)">Gagal memuat data</div>';
+            return;
+          }
+          var t = r.data;
+          var html =
+            '<div class="dgrid">' +
+            df(
+              "Nomor Tiket",
+              '<span style="font-family:monospace;font-weight:700;color:var(--biru2)">' +
+                t.nomor_tiket +
+                "</span>",
+            ) +
+            df(
+              "Status",
+              '<span class="badge badge-' +
+                t.status +
+                '">' +
+                t.status +
+                "</span>",
+            ) +
+            df("Nama Pemohon", safe(t.nama_pemohon)) +
+            df("No. HP", t.no_hp || "-") +
+            df("Kategori", t.kategori) +
+            df(
+              "Petugas",
+              t.petugas_nama
+                ? safe(t.petugas_nama)
+                : '<span style="color:var(--teks3)">Belum ditugaskan</span>',
+            ) +
+            df(
+              "Tgl Pelayanan",
+              t.tanggal_pelayanan
+                ? t.tanggal_pelayanan.substring(0, 10)
+                : '<span style="color:var(--teks3)">Belum diisi</span>',
+            ) +
+            df("Dibuat", fmtDate(t.created_at)) +
+            "</div>" +
+            '<hr style="border:none;border-top:1px solid var(--border);margin:16px 0">' +
+            '<div class="dlbl">Subjek</div><div class="dval" style="font-weight:600">' +
+            safe(t.subjek) +
+            "</div>" +
+            '<div class="dlbl">Uraian</div><div class="dval">' +
+            safe(t.uraian).replace(/\n/g, "<br>") +
+            "</div>";
+          if (t.catatan)
+            html +=
+              '<div class="dlbl">Catatan</div><div class="dval" style="background:var(--emas-light);padding:10px;border-radius:6px;border-left:3px solid var(--emas)">' +
+              safe(t.catatan) +
+              "</div>";
+          if (t.silastik_pertanyaan || t.silastik_jawaban)
+            html +=
+              '<div class="silastik-box" style="margin-top:16px">' +
+              '<div class="fsec-title"><i class="ti ti-clipboard-text"></i>Silastik</div>' +
+              '<div class="dlbl">Pertanyaan Silastik</div><div class="dval">' +
+              safe(t.silastik_pertanyaan) +
+              "</div>" +
+              '<div class="dlbl">Jawaban Silastik</div><div class="dval" style="margin-bottom:0">' +
+              safe(t.silastik_jawaban) +
+              "</div>" +
+              "</div>";
+          document.getElementById("detail-body").innerHTML = html;
+        });
+      }
+
+      function df(lbl, val) {
+        return (
+          '<div style="padding:8px 0;border-bottom:1px solid var(--border)"><div class="dlbl">' +
+          lbl +
+          '</div><div class="dval" style="margin-bottom:0">' +
+          val +
+          "</div></div>"
+        );
+      }
+
+      function confirmDelTiket(nomor) {
+        delTiketNomor = nomor;
+        document.getElementById("del-tiket-nom").textContent = nomor;
+        openModal("m-del-tiket");
+      }
+
+      function doDelTiket() {
+        if (!delTiketNomor) return;
+        document.getElementById("btn-del-tiket").disabled = true;
+        apiFetch("/api/admin/tiket/" + delTiketNomor, "DELETE", null)
+          .then(function (r) {
+            document.getElementById("btn-del-tiket").disabled = false;
+            closeModal("m-del-tiket");
+            if (r.success) {
+              toast("Tiket dihapus", "t-ok");
+              loadTiket(tPage);
+              loadDashboard();
+            } else toast(r.message || "Gagal menghapus", "t-err");
+          })
+          .catch(function () {
+            document.getElementById("btn-del-tiket").disabled = false;
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      /* PETUGAS */
+      function loadPetugasDrop() {
+        apiFetch("/api/admin/petugas", "GET", null)
+          .then(function (r) {
+            if (!r.success) return;
+            petugasList = r.data || [];
+            var s1 = document.getElementById("mt-petugas");
+            var s2 = document.getElementById("t-petugas");
+            s1.innerHTML = '<option value="">-- Belum Ditugaskan --</option>';
+            s2.innerHTML =
+              '<option value="">Semua Petugas</option><option value="unassigned">Belum Ditugaskan</option>';
+            petugasList.forEach(function (p) {
+              var nm = p.nama_alias || p.nama_lengkap;
+              if (!p.aktif) nm += " (Tidak Aktif)";
+              s1.innerHTML +=
+                '<option value="' + p.id + '">' + nm + "</option>";
+              s2.innerHTML +=
+                '<option value="' + p.id + '">' + nm + "</option>";
+            });
+          })
+          .catch(function () {});
+      }
+
+      var PETUGAS_SORT_COLS = [
+        "nama_lengkap",
+        "nama_alias",
+        "nip",
+        "aktif",
+        "created_at",
+      ];
+
+      function sortPetugas(col) {
+        if (pSort === col) {
+          pOrder = pOrder === "asc" ? "desc" : "asc";
+        } else {
+          pSort = col;
+          pOrder = "asc";
+        }
+        updatePetugasSortIcons();
+        renderPetugasTable();
+      }
+
+      function updatePetugasSortIcons() {
+        PETUGAS_SORT_COLS.forEach(function (c) {
+          var th = document.getElementById("th-p-" + c);
+          if (!th) return;
+          var ic = th.querySelector(".sort-ic");
+          if (c === pSort) {
+            th.classList.add("active");
+            ic.className =
+              "ti " +
+              (pOrder === "asc" ? "ti-sort-ascending" : "ti-sort-descending") +
+              " sort-ic";
+          } else {
+            th.classList.remove("active");
+            ic.className = "ti ti-arrows-sort sort-ic";
+          }
+        });
+      }
+
+      function loadPetugas() {
+        document.getElementById("petugas-tbody").innerHTML =
+          '<tr><td colspan="7" class="empty-row">Memuat data...</td></tr>';
+        apiFetch("/api/admin/petugas", "GET", null)
+          .then(function (r) {
+            if (!r.success) {
+              toast("Gagal memuat petugas", "t-err");
+              return;
+            }
+            petugasList = r.data || [];
+            renderPetugasTable();
+          })
+          .catch(function () {
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      function renderPetugasTable() {
+        if (!petugasList.length) {
+          document.getElementById("petugas-tbody").innerHTML =
+            '<tr><td colspan="7" class="empty-row">Belum ada petugas</td></tr>';
+          return;
+        }
+        var list = petugasList.slice();
+        if (pSort) {
+          list.sort(function (a, b) {
+            var av = a[pSort],
+              bv = b[pSort];
+            if (pSort === "aktif") {
+              av = av ? 1 : 0;
+              bv = bv ? 1 : 0;
+            } else if (pSort === "created_at") {
+              av = new Date(av).getTime();
+              bv = new Date(bv).getTime();
+            } else {
+              av = (av || "").toString().toLowerCase();
+              bv = (bv || "").toString().toLowerCase();
+            }
+            if (av < bv) return pOrder === "asc" ? -1 : 1;
+            if (av > bv) return pOrder === "asc" ? 1 : -1;
+            return 0;
+          });
+        }
+        var html = "";
+        list.forEach(function (p, i) {
+          html +=
+            "<tr>" +
+            '<td style="color:var(--teks3);font-size:12px">' +
+            (i + 1) +
+            "</td>" +
+            '<td><div class="td-nama">' +
+            safe(p.nama_lengkap) +
+            "</div></td>" +
+            '<td style="font-size:12px;color:var(--biru2);font-weight:600">' +
+            safe(p.nama_alias) +
+            "</td>" +
+            '<td style="font-family:monospace;font-size:12px">' +
+            safe(p.nip) +
+            "</td>" +
+            '<td><span class="badge ' +
+            (p.aktif ? "badge-aktif" : "badge-nonaktif") +
+            '">' +
+            (p.aktif ? "Aktif" : "Tidak Aktif") +
+            "</span></td>" +
+            '<td style="font-size:11px;color:var(--teks3)">' +
+            fmtDate(p.created_at) +
+            "</td>" +
+            '<td><div style="display:flex;gap:5px">' +
+            '<button class="btn btn-icon btn-edit" title="Edit" onclick="openEditPetugas(' +
+            p.id +
+            ')"><i class="ti ti-edit" style="font-size:14px"></i></button>' +
+            '<button class="btn btn-icon btn-del" title="Hapus" onclick="confirmDelPetugas(' +
+            p.id +
+            ",'" +
+            safe(p.nama_lengkap).replace(/'/g, "") +
+            '\')"><i class="ti ti-trash" style="font-size:14px"></i></button>' +
+            "</div></td></tr>";
+        });
+        document.getElementById("petugas-tbody").innerHTML = html;
+      }
+
+      function openPetugasModal(isEdit) {
+        document.getElementById("mp-head").textContent = isEdit
+          ? "Edit Petugas"
+          : "Tambah Petugas";
+        if (!isEdit) {
+          ["mp-id", "mp-nama", "mp-alias", "mp-nip"].forEach(function (id) {
+            document.getElementById(id).value = "";
+          });
+          document.getElementById("mp-aktif").value = "1";
+        }
+        openModal("m-petugas");
+      }
+
+      function openEditPetugas(id) {
+        var p = null;
+        for (var i = 0; i < petugasList.length; i++) {
+          if (petugasList[i].id === id) {
+            p = petugasList[i];
+            break;
+          }
+        }
+        if (!p) return;
+        document.getElementById("mp-id").value = p.id;
+        document.getElementById("mp-nama").value = p.nama_lengkap || "";
+        document.getElementById("mp-alias").value = p.nama_alias || "";
+        document.getElementById("mp-nip").value = p.nip || "";
+        document.getElementById("mp-aktif").value = p.aktif ? "1" : "0";
+        openPetugasModal(true);
+      }
+
+      function savePetugas() {
+        var id = document.getElementById("mp-id").value;
+        var nama = document.getElementById("mp-nama").value.trim();
+        var alias = document.getElementById("mp-alias").value.trim();
+        var nip = document.getElementById("mp-nip").value.trim();
+        var aktif = document.getElementById("mp-aktif").value === "1";
+        if (!nama) {
+          toast("Nama lengkap wajib diisi", "t-warn");
+          return;
+        }
+        setBtn("btn-sp", "bsp-txt", null, "bsp-sp", "Menyimpan...", true);
+        var path = id ? "/api/admin/petugas/" + id : "/api/admin/petugas";
+        var method = id ? "PUT" : "POST";
+        apiFetch(path, method, {
+          nama_lengkap: nama,
+          nama_alias: alias,
+          nip: nip,
+          aktif: aktif,
+        })
+          .then(function (r) {
+            setBtn("btn-sp", "bsp-txt", null, "bsp-sp", "Simpan", false);
+            if (r.success) {
+              closeModal("m-petugas");
+              toast(id ? "Petugas diperbarui" : "Petugas ditambahkan", "t-ok");
+              loadPetugas();
+              loadPetugasDrop();
+            } else toast(r.message || "Gagal menyimpan", "t-err");
+          })
+          .catch(function () {
+            setBtn("btn-sp", "bsp-txt", null, "bsp-sp", "Simpan", false);
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      function confirmDelPetugas(id, nama) {
+        delPetugasId = id;
+        document.getElementById("del-pet-nama").textContent = nama;
+        openModal("m-del-petugas");
+      }
+
+      function doDelPetugas() {
+        if (!delPetugasId) return;
+        document.getElementById("btn-del-pet").disabled = true;
+        apiFetch("/api/admin/petugas/" + delPetugasId, "DELETE", null)
+          .then(function (r) {
+            document.getElementById("btn-del-pet").disabled = false;
+            closeModal("m-del-petugas");
+            if (r.success) {
+              toast("Petugas dihapus", "t-ok");
+              loadPetugas();
+              loadPetugasDrop();
+            } else toast(r.message || "Gagal menghapus", "t-err");
+          })
+          .catch(function () {
+            document.getElementById("btn-del-pet").disabled = false;
+            toast("Gagal terhubung", "t-err");
+          });
+      }
+
+      /* MODAL */
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
+      document.addEventListener("click", function (e) {
+        [
+          "m-tiket",
+          "m-detail",
+          "m-del-tiket",
+          "m-petugas",
+          "m-del-petugas",
+        ].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el && e.target === el) el.classList.remove("open");
+        });
+      });
+
+      /* TOAST */
+      function toast(msg, cls) {
+        var wrap = document.getElementById("toasts");
+        var el = document.createElement("div");
+        el.className = "toast " + (cls || "");
+        var icons = {
+          "t-ok": "ti-circle-check",
+          "t-err": "ti-alert-circle",
+          "t-warn": "ti-alert-triangle",
+        };
+        el.innerHTML =
+          '<i class="ti ' +
+          (icons[cls] || "ti-info-circle") +
+          '" style="font-size:15px;flex-shrink:0"></i><span>' +
+          safe(msg) +
+          "</span>";
+        wrap.appendChild(el);
+        setTimeout(function () {
+          el.style.opacity = "0";
+          el.style.transition = "opacity .3s";
+          setTimeout(function () {
+            el.remove();
+          }, 300);
+        }, 3000);
+      }
+
+      /* UTILS */
+      function safe(s) {
+        if (!s) return "";
+        var d = document.createElement("div");
+        d.textContent = String(s);
+        return d.innerHTML;
+      }
+
+      function fmtDate(str) {
+        if (!str) return "-";
+        try {
+          return new Date(str).toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+        } catch (e) {
+          return str;
+        }
+      }
+    </script>
+  </body>
+</html>

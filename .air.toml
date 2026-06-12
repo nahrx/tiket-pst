@@ -1,0 +1,21 @@
+# Air — hot reload untuk Go
+# Install: go install github.com/air-verse/air@latest
+
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o ./tmp/tiket-bps-api ./main.go"
+  bin = "./tmp/tiket-bps-api"
+  include_ext = ["go"]
+  exclude_dir = ["tmp", "bin", "data", "public"]
+  delay = 1000
+
+[log]
+  time = true
+
+[color]
+  main = "yellow"
+  watcher = "cyan"
+  build = "green"
+  runner = "magenta"
