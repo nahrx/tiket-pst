@@ -1,13 +1,37 @@
 services:
+  # ── DATABASE ──────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: tiket-bps-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   # ── API ───────────────────────────────────────────────────────────────────
   api:
     build: .
     container_name: tiket-bps-api
     restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     volumes:
       - ./public:/app/public # mount frontend HTML
-networks:
-  metabase-postgresql-alpine_default:
-    external: true
+
+volumes:
+  pgdata:
